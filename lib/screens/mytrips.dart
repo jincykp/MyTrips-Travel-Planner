@@ -72,7 +72,8 @@ class _TripScreenState extends State<TripScreen> {
                       const EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 5.0),
                   prefixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20)),
+                      // borderRadius: BorderRadius.circular(20)
+                      ),
                 ),
               )
             ],
