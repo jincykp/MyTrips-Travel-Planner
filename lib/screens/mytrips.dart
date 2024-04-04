@@ -36,13 +36,19 @@ class _TripScreenState extends State<TripScreen> {
     } else {
       searchResults = tripListNotifier.value
           .where((user) =>
-              user.destination.toLowerCase().contains(datas.toLowerCase()) ||
-              user.tripname.toLowerCase().contains(datas.toLowerCase()))
+              user.destination!.toLowerCase().contains(datas.toLowerCase()))
           .toList();
     }
     setState(() {
       tripslist = searchResults;
     });
+    if (searchResults.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+        "No Trips Found",
+        style: TextStyle(color: const Color.fromARGB(255, 133, 42, 35)),
+      )));
+    }
   }
 
   @override
@@ -72,8 +78,7 @@ class _TripScreenState extends State<TripScreen> {
                       const EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 5.0),
                   prefixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
-                      // borderRadius: BorderRadius.circular(20)
-                      ),
+                      borderRadius: BorderRadius.circular(20)),
                 ),
               )
             ],
@@ -94,70 +99,75 @@ class _TripScreenState extends State<TripScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         height: 100,
-                        child: Card(
-                          color: Color.fromARGB(255, 95, 40, 91),
-                          child: ListTile(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ViewTripDetails(
-                                          trips: tripList[index])));
-                            },
-                            leading: Column(
-                              children: [
-                                trip.image == ''
-                                    ? Container(
-                                        width: 150,
-                                        height: 70,
-                                        // color: Colors.white,
-                                        child: Icon(Icons.trip_origin),
-                                      )
-                                    : Container(
-                                        width: 130,
-                                        height: 80,
-                                        child: Image.file(
-                                          File(trip.image!),
-                                          fit: BoxFit.cover,
+                        child: Expanded(
+                          child: Card(
+                            color: Color.fromARGB(255, 109, 109, 143),
+                            child: ListTile(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ViewTripDetails(
+                                            trips: tripList[index])));
+                              },
+                              leading: trip.image == ''
+                                  ? Container(
+                                      width: 100,
+                                      height: 130,
+                                      //color: Colors.white,
+                                      child: Icon(Icons.trip_origin),
+                                    )
+                                  : Container(
+                                      width: 100,
+                                      height: 130,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: Expanded(
+                                          child: Image.file(
+                                            File(trip.image!),
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
-                                      )
-                              ],
-                            ),
-                            title: Text(
-                              "${trip.destination}",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            subtitle: Text(
-                              "${trip.tripname}",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
+                                      ),
+                                    ),
+                              title: Text(
+                                "${trip.destination}",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              subtitle: Text(
+                                "${trip.tripname}",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    EditScreen(
+                                                      tripss: tripList[index],
+                                                      id: tripList[index].id ??
+                                                          0,
+                                                    )));
+                                      },
+                                      icon: Icon(
+                                        Icons.edit,
+                                        color: Colors.black,
+                                      )),
+                                  IconButton(
                                     onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => EditScreen(
-                                                    trips: tripList[index],
-                                                    id: tripList[index].id ?? 0,
-                                                  )));
+                                      deleteAlertDialog(context);
                                     },
                                     icon: Icon(
-                                      Icons.edit,
-                                      color: Colors.black,
-                                    )),
-                                IconButton(
-                                  onPressed: () {
-                                    deleteAlertDialog(context);
-                                  },
-                                  icon: Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
+                                      Icons.delete,
+                                      color: Colors.red,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),

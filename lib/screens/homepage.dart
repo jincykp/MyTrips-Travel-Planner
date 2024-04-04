@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_trips/SCREENS/memories.dart';
-
 import 'package:my_trips/profile.dart';
 import 'package:my_trips/screens/addtrips.dart';
+import 'package:my_trips/screens/memories.dart';
 import 'package:my_trips/screens/mytrips.dart';
 import 'package:my_trips/screens/pasttrips.dart';
 

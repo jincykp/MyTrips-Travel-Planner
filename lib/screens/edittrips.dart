@@ -1,11 +1,14 @@
+import 'dart:io';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:my_trips/database/functions/trip_db_functions.dart';
 import 'package:my_trips/database/model/trip_model.dart';
-
+import 'package:image_picker/image_picker.dart';
 import 'package:my_trips/screens/loginscreens/support.dart';
 
 class EditScreen extends StatefulWidget {
-  const EditScreen({required this.trips, required this.id, super.key});
-  final TripModel trips;
+  const EditScreen({required this.tripss, required this.id, super.key});
+  final TripModel tripss;
   final int id;
 
   @override
@@ -15,27 +18,36 @@ class EditScreen extends StatefulWidget {
 class _EditScreenState extends State<EditScreen> {
   final TextStyle textStyle =
       TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold);
-
-  late DateTime? endingDate;
+  DateTime? startingDate;
+  DateTime? endingDate;
   final _destinationController = TextEditingController();
   final _startdateController = TextEditingController();
   final _enddateController = TextEditingController();
   final _tripnameController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  late DateTime? startingDate;
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   DateTime startDate = DateTime.parse(widget.trips.startdate);
-  //   DateTime endDate = DateTime.parse(widget.trips.enddate);
-  //   _destinationController.text = widget.trips.destination;
-  //   _startdateController.text = startDate.toString();
-  //   _enddateController.text = endDate.toString();
-  //   _tripnameController.text = widget.trips.tripname;
-  //   _descriptionController.text = widget.trips.description;
-  // }
+  String? imagee;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    startingDate = widget.tripss.startdate;
+    _startdateController.text =
+        DateFormat('dd-MM-yyyy').format(widget.tripss.startdate!);
+    endingDate = widget.tripss.enddate;
+    _enddateController.text =
+        DateFormat('dd-MM-yyyy').format(widget.tripss.enddate!);
+    // DateTime? startDate = DateTime.parse(_startdateController.text.trim());
+    // DateTime? endDate = DateTime.parse(_enddateController.text.trim());
+    _destinationController.text = widget.tripss.destination!;
+    // _startdateController.text = startDate.toString();
+    // _enddateController.text = endDate.toString();
+    _tripnameController.text = widget.tripss.tripname!;
+    _descriptionController.text = widget.tripss.description!;
+    imagee = widget.tripss.image;
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +67,35 @@ class _EditScreenState extends State<EditScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                imagee == null
+                    ? Container(
+                        width: 100,
+                        height: 80,
+                        color: Colors.white,
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.add_a_photo_outlined),
+                          iconSize: 55,
+                        ))
+                    : Container(
+                        height: 80,
+                        width: 100,
+                        child: Image.file(
+                          File(imagee!),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      addtripImage();
+                    },
+                    child: Text("change image")),
+                SizedBox(
+                  height: 15,
+                ),
                 Row(
                   children: [
                     Text(
@@ -158,7 +199,6 @@ class _EditScreenState extends State<EditScreen> {
                     if (value == null || value.isEmpty) {
                       return 'Change the description';
                     }
-
                     return null;
                   },
                 ),
@@ -170,17 +210,17 @@ class _EditScreenState extends State<EditScreen> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        if (_formKey.currentState!.validate()) {}
-                        // if (_destinationController.text.isNotEmpty ||
-                        //     _startdateController.text.isNotEmpty ||
-                        //     _enddateController.text.isNotEmpty ||
-                        //     _tripnameController.text.isNotEmpty ||
-                        //     _descriptionController.text.isNotEmpty) {
-                        //   saveTrip();
-                        // } else {
-                        //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        //       content: Text("please enter all details")));
-                        // }
+                        if (_formKey.currentState!.validate()) {
+                          final tripdatas = TripModel(
+                              destination: _destinationController.text.trim(),
+                              startdate: startingDate,
+                              enddate: endingDate,
+                              tripname: _tripnameController.text.trim(),
+                              description: _descriptionController.text.trim(),
+                              image: imagee.toString());
+                          editTrip(tripdatas);
+                          Navigator.of(context).pop();
+                        }
                       },
                       style: ButtonStyle(
                         backgroundColor:
@@ -210,6 +250,17 @@ class _EditScreenState extends State<EditScreen> {
         }
       });
       return _picked;
+    }
+  }
+
+  addtripImage() async {
+    final imagePicker = ImagePicker();
+    final pickedImage =
+        await imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      setState(() {
+        imagee = pickedImage.path;
+      });
     }
   }
 }

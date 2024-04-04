@@ -164,7 +164,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             (route) => false);
       },
     );
-
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       backgroundColor: Colors.grey,
@@ -175,7 +174,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         continueButton,
       ],
     );
-
     // show the dialog
     showDialog(
       context: context,

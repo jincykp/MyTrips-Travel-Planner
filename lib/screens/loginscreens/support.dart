@@ -68,3 +68,18 @@ class TripFormFields extends StatelessWidget {
     );
   }
 }
+
+// AppBar---
+class forAppBar extends StatelessWidget {
+  final String title;
+  const forAppBar({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      foregroundColor: Colors.white,
+      backgroundColor: Color.fromARGB(255, 1, 1, 19),
+      title: Text(title),
+    );
+  }
+}

@@ -45,7 +45,7 @@ class _AddTripScreenState extends State<AddTripScreen> {
                 images == null
                     ? Container(
                         width: 140,
-                        height: 100,
+                        height: 60,
                         color: Colors.white,
                         child: IconButton(
                           onPressed: () {
@@ -55,8 +55,8 @@ class _AddTripScreenState extends State<AddTripScreen> {
                           iconSize: 55,
                         ))
                     : Container(
-                        height: 100,
-                        width: 140,
+                        width: 100,
+                        height: 70,
                         child: Image.file(
                           File(images!),
                           fit: BoxFit.cover,
@@ -235,14 +235,16 @@ class _AddTripScreenState extends State<AddTripScreen> {
 
       await AddTrips(trips);
       print("trip added");
-
       Navigator.of(context).pop();
     }
   }
 
   Future<DateTime?> pickDate(bool startDate) async {
     DateTime? _picked = await showDatePicker(
-        context: context, firstDate: DateTime(2000), lastDate: DateTime(2050));
+        context: context,
+        firstDate: DateTime(2020),
+        lastDate: DateTime(2050),
+        initialDate: DateTime.now());
     if (_picked != null) {
       setState(() {
         if (startDate) {

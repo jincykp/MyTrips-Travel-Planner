@@ -3,7 +3,6 @@ import 'package:hive/hive.dart';
 import 'package:my_trips/database/model/data_model.dart';
 
 ValueNotifier<List<UserModel>> userListNotifier = ValueNotifier([]);
-
 Future<void> addUserProfile(UserModel value) async {
   final userDataBox = await Hive.openBox<UserModel>('user_data');
   await userDataBox.add(value);
