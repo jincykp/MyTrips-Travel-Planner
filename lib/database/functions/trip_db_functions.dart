@@ -28,6 +28,7 @@ Future<void> updateTrip() async {
 
 Future<void> deleteTrip(int id) async {
   final tripDataBox = await Hive.openBox<TripModel>('trip_data');
+  // tripDataBox.clear();
   tripDataBox.delete(id);
   updateTrip();
 }
@@ -35,9 +36,13 @@ Future<void> deleteTrip(int id) async {
 Future<void> editTrip(TripModel editedTrips) async {
   print("here reached");
   final tripDataBox = await Hive.openBox<TripModel>('trip_data');
-  await tripDataBox.put(editedTrips.id, editedTrips);
+  if (tripDataBox.containsKey(editedTrips.id)) {
+    tripDataBox.put(editedTrips.id, editedTrips);
+    print("updated");
+  } else {
+    print("id ${editedTrips.id} does not match");
+  }
   updateTrip();
-  print("trip updated ");
 }
 
 ValueNotifier<List<TripModel>> addplanNotifier = ValueNotifier([]);

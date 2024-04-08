@@ -80,7 +80,6 @@ class _AddTripScreenState extends State<AddTripScreen> {
                     if (value == null || value.isEmpty) {
                       return 'Destination is required';
                     }
-
                     return null;
                   },
                 ),
@@ -190,9 +189,6 @@ class _AddTripScreenState extends State<AddTripScreen> {
                         if (_formKey.currentState!.validate()) {
                           print("form is valid");
                           saveTrip();
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Please enter all details")));
                         }
                       },
                       style: ButtonStyle(

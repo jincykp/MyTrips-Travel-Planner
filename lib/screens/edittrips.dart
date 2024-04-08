@@ -212,6 +212,7 @@ class _EditScreenState extends State<EditScreen> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           final tripdatas = TripModel(
+                              id: widget.tripss.id,
                               destination: _destinationController.text.trim(),
                               startdate: startingDate,
                               enddate: endingDate,

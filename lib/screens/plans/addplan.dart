@@ -45,9 +45,6 @@ class _addPlanScreenState extends State<addPlanScreen> {
                 print("valid");
                 saveActivity();
                 // Navigator.of(context).pop();
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Please enter all details")));
               }
             },
             icon: Icon(
@@ -190,6 +187,6 @@ class _addPlanScreenState extends State<addPlanScreen> {
         title: titletitle,
         time: timetime);
     await addPlans(addplantrip);
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(addplantrip);
   }
 }

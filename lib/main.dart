@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_trips/SCREENS/splash.dart';
 import 'package:my_trips/database/model/data_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:my_trips/database/model/memories_model.dart';
 import 'package:my_trips/screens/homepage.dart';
 import 'package:path_provider/path_provider.dart' as path;
 import 'package:my_trips/database/model/trip_model.dart';
@@ -12,6 +13,7 @@ main() async {
   Hive.init(dir.path);
   Hive.registerAdapter(UserModelAdapter());
   Hive.registerAdapter(TripModelAdapter());
+  Hive.registerAdapter(MemoryModelAdapter());
   await Hive.initFlutter('hive_db');
   runApp(MyApp());
 }
