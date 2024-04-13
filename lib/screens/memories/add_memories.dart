@@ -168,7 +168,11 @@ class _AddMemoriesScreenState extends State<AddMemoriesScreen> {
         MemoryExperience: memoryyexperience);
     await addMemories(memories);
     // print("memory added");
-    Navigator.of(context).pop();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Memories  added successfully"),
+      backgroundColor: const Color.fromARGB(255, 22, 73, 114),
+    ));
+    Navigator.of(context).pop(memories);
   }
 
   addMemoryImage() async {

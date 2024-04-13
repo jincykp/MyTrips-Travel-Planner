@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:my_trips/database/functions/trip_db_functions.dart';
 import 'package:my_trips/database/model/trip_model.dart';
+import 'package:my_trips/screens/addtrips.dart';
 import 'package:my_trips/screens/edittrips.dart';
 import 'package:my_trips/screens/fullview.dart';
 
@@ -15,7 +16,7 @@ class TripScreen extends StatefulWidget {
 class _TripScreenState extends State<TripScreen> {
   //late TripModel triplist;
   late List<TripModel> tripslist = [];
-  bool isSnackBarVisible = false;
+
   String reg = '';
   // get image => null;
   final TextEditingController _searchcontroller = TextEditingController();
@@ -43,19 +44,6 @@ class _TripScreenState extends State<TripScreen> {
     setState(() {
       tripslist = searchResults;
     });
-    if (searchResults.isEmpty && !isSnackBarVisible) {
-      isSnackBarVisible = true;
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(
-              content: Text(
-            "No Trips Found",
-            style: TextStyle(color: const Color.fromARGB(255, 133, 42, 35)),
-          )))
-          .closed
-          .then((_) {
-        isSnackBarVisible = false;
-      });
-    }
   }
 
   @override
@@ -141,10 +129,12 @@ class _TripScreenState extends State<TripScreen> {
                                 title: Text(
                                   "${trip.destination}",
                                   style: TextStyle(color: Colors.white),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                                 subtitle: Text(
                                   "${trip.tripname}",
                                   style: TextStyle(color: Colors.white),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                                 trailing: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -187,11 +177,39 @@ class _TripScreenState extends State<TripScreen> {
                     itemCount: tripslist.length,
                   );
                 } else {
-                  return Container();
+                  return Center(
+                    child: Text(
+                      "No Trips",
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 6, 6, 37),
+                          fontWeight: FontWeight.bold),
+                    ),
+                  );
                 }
               },
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                FloatingActionButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddTripScreen()));
+                  },
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  backgroundColor: Color.fromARGB(255, 1, 1, 19),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );

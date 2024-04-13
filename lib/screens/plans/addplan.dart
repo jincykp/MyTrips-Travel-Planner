@@ -70,50 +70,88 @@ class _addPlanScreenState extends State<addPlanScreen> {
                     )
                   ],
                 ),
-                // DropdownButton(items: items, onChanged: onChanged),
-                TripFormFields(
+                TextFormField(
                   controller: activitytypeController,
-                  hintText: "Select your Activity",
+                  decoration: InputDecoration(
+                    hintText: "Select your Activity",
+                    hintStyle:
+                        TextStyle(color: Color.fromARGB(255, 136, 125, 125)),
+                    suffixIcon: PopupMenuButton<String>(
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.white,
+                      ),
+                      onSelected: (String? value) {
+                        setState(() {
+                          valueChoose = value;
+                          activitytypeController.text = value ?? '';
+                        });
+                      },
+                      itemBuilder: (BuildContext context) {
+                        return listitems
+                            .map<PopupMenuEntry<String>>((String item) {
+                          return PopupMenuItem<String>(
+                            value: item,
+                            child: Text(item),
+                          );
+                        }).toList();
+                      },
+                    ),
+                  ),
+                  readOnly: true, // Makes the text field non-editable
+                  onTap: () {
+                    FocusScope.of(context)
+                        .requestFocus(new FocusNode()); // Dismiss the keyboard
+                  },
+                  style: TextStyle(color: Colors.white),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Activity Type is required";
+                      return 'Activity Type is required';
                     }
                     return null;
                   },
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: DropdownButton(
-                      dropdownColor: const Color.fromARGB(255, 93, 35, 104),
-                      hint: Text(
-                        "Select activity type:",
-                        style: TextStyle(
-                            color: const Color.fromARGB(255, 134, 133, 133)),
-                      ),
-                      icon: Icon(Icons.arrow_drop_down),
-                      iconSize: 30,
-                      isExpanded: true,
-                      value: valueChoose,
-                      onChanged: (newValue) {
-                        setState(() {
-                          valueChoose = newValue;
-                          activitytypeController.text = newValue ?? '';
-                        });
-                      },
-                      items: listitems.map((valueItem) {
-                        return DropdownMenuItem(
-                          value: valueItem,
-                          child: Text(
-                            valueItem,
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                // TripFormFields(
+                //   controller: activitytypeController,
+                //   hintText: "Select your Activity",
+                //   validator: (value) {
+                //     if (value == null || value.isEmpty) {
+                //       return "Activity Type is required";
+                //     }
+                //     return null;
+                //   },
+                //   prefixIcon: Padding(
+                //     padding: const EdgeInsets.all(15.0),
+                //     child: DropdownButton(
+                //       dropdownColor: const Color.fromARGB(255, 93, 35, 104),
+                //       hint: Text(
+                //         "Select activity type:",
+                //         style: TextStyle(
+                //             color: const Color.fromARGB(255, 134, 133, 133)),
+                //       ),
+                //       icon: Icon(Icons.arrow_drop_down),
+                //       iconSize: 30,
+                //       isExpanded: true,
+                //       value: valueChoose,
+                //       onChanged: (newValue) {
+                //         setState(() {
+                //           valueChoose = newValue;
+                //           activitytypeController.text = newValue ?? '';
+                //         });
+                //       },
+                //       items: listitems.map((valueItem) {
+                //         return DropdownMenuItem(
+                //           value: valueItem,
+                //           child: Text(
+                //             valueItem,
+                //             style: TextStyle(color: Colors.white),
+                //           ),
+                //         );
+                //       }).toList(),
+                //     ),
+                //   ),
+                // ),
+                SizedBox(height: 10),
                 Row(
                   children: [
                     Text(
@@ -131,6 +169,9 @@ class _addPlanScreenState extends State<addPlanScreen> {
                       }
                       return null;
                     }),
+                SizedBox(
+                  height: 10,
+                ),
                 Row(
                   children: [
                     Text(
@@ -187,6 +228,12 @@ class _addPlanScreenState extends State<addPlanScreen> {
         title: titletitle,
         time: timetime);
     await addPlans(addplantrip);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Plans added successfully"),
+        backgroundColor: Color.fromARGB(255, 26, 62, 92),
+      ),
+    );
     Navigator.of(context).pop(addplantrip);
   }
 }

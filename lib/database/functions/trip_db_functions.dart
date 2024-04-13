@@ -28,6 +28,7 @@ Future<void> updateTrip() async {
 
 Future<void> deleteTrip(int id) async {
   final tripDataBox = await Hive.openBox<TripModel>('trip_data');
+  print(id);
   // tripDataBox.clear();
   tripDataBox.delete(id);
   updateTrip();
@@ -54,5 +55,3 @@ Future<void> addPlans(TripModel datass) async {
   userListNotifier.notifyListeners();
   print("plan added");
 }
-
-Future<void> updatePlan() async {}

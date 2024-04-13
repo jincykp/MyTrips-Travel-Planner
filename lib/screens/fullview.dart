@@ -75,10 +75,16 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
-                        Text(tripListss.destination,
+                        Flexible(
+                          child: Text(
+                            tripListss.destination,
                             style: TextStyle(
                                 color: Colors.white,
-                                fontWeight: FontWeight.bold)),
+                                fontWeight: FontWeight.bold),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
+                        ),
                       ],
                     ),
                     SizedBox(height: 15),
@@ -130,10 +136,17 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
-                        Text(tripListss.tripname,
+                        Flexible(
+                          child: Text(
+                            tripListss.tripname,
                             style: TextStyle(
                                 color: Colors.white,
-                                fontWeight: FontWeight.bold)),
+                                overflow: TextOverflow.ellipsis,
+                                fontWeight: FontWeight.bold),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
+                        ),
                       ],
                     ),
                     SizedBox(height: 15),
@@ -148,10 +161,16 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
-                        Text(tripListss.description,
+                        Flexible(
+                          child: Text(
+                            tripListss.description,
                             style: TextStyle(
                                 color: const Color.fromARGB(255, 233, 224, 224),
-                                fontWeight: FontWeight.bold)),
+                                fontWeight: FontWeight.bold),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
+                        ),
                       ],
                     ),
                     SizedBox(

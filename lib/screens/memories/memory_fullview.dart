@@ -1,11 +1,12 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:my_trips/database/functions/memories_db_functions.dart';
 import 'package:my_trips/database/model/memories_model.dart';
 
 class MemoryFullview extends StatefulWidget {
   final MemoryModel fullview;
-  MemoryFullview({super.key, required this.fullview});
+  int id;
+  MemoryFullview({super.key, required this.fullview, required this.id});
 
   @override
   State<MemoryFullview> createState() => _MemoryFullviewState();
@@ -61,11 +62,13 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                       ),
                       Row(
                         children: [
-                          Text(
-                            "Trip Name:",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                          Flexible(
+                            child: Text(
+                              "Trip Name:",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                           SizedBox(
                             width: 20,
@@ -75,7 +78,19 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
-                          )
+                          ),
+                          SizedBox(
+                            width: 150,
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                deleteAlertDialog(context, memoryListss.id);
+                                //Navigator.of(context).pop();
+                              },
+                              icon: Icon(
+                                Icons.delete,
+                                color: Color.fromARGB(255, 143, 36, 28),
+                              ))
                         ],
                       ),
                       SizedBox(
@@ -129,5 +144,32 @@ class _MemoryFullviewState extends State<MemoryFullview> {
             ),
           ),
         ));
+  }
+
+  deleteAlertDialog(BuildContext context, int id) {
+    Widget cancelButton = TextButton(
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+      child: Text("Cancel"),
+    );
+    Widget continueButton = TextButton(
+        onPressed: () {
+          print(id);
+          deleteMemory(id);
+          Navigator.of(context).pop();
+        },
+        child: Text("Delete"));
+    AlertDialog alert = AlertDialog(
+      backgroundColor: Colors.white,
+      title: Text("Delete This Memory"),
+      content: Text("Do you want to delete this memory?"),
+      actions: [cancelButton, continueButton],
+    );
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        });
   }
 }

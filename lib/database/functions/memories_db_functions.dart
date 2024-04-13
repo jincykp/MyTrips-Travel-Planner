@@ -9,6 +9,7 @@ Future<void> addMemories(MemoryModel mm) async {
   memoryDataBox.put(mm.id, mm);
   memoryNotifier.value.add(mm);
   memoryNotifier.notifyListeners();
+
   print("mm added");
 }
 
@@ -17,4 +18,11 @@ Future<void> updateMemories() async {
   memoryNotifier.value.clear();
   memoryNotifier.value.addAll(memoryDataBox.values);
   memoryNotifier.notifyListeners();
+}
+
+Future<void> deleteMemory(int id) async {
+  final memoryDatabox = await Hive.openBox<MemoryModel>('memo_data');
+  memoryDatabox.delete(id);
+  // memoryDatabox.clear();
+  updateMemories();
 }
