@@ -18,7 +18,7 @@ class _TripScreenState extends State<TripScreen> {
   late List<TripModel> tripslist = [];
 
   String reg = '';
-  // get image => null;
+
   final TextEditingController _searchcontroller = TextEditingController();
 
   var trip;
@@ -28,7 +28,14 @@ class _TripScreenState extends State<TripScreen> {
     super.initState();
 
     updateTrip();
-    tripslist = tripListNotifier.value;
+    tripListNotifier.addListener(() {
+      tripslist = tripListNotifier.value;
+      sortTrips();
+    });
+  }
+
+  void sortTrips() {
+    tripslist.sort((a, b) => a.startdate!.compareTo(b.startdate!));
   }
 
   void searchTrips(String datas) {
