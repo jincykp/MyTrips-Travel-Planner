@@ -21,21 +21,25 @@ class _TripScreenState extends State<TripScreen> {
 
   final TextEditingController _searchcontroller = TextEditingController();
 
-  var trip;
   @override
   void initState() {
+    updateTrip();
     // TODO: implement initState
     super.initState();
 
-    updateTrip();
     tripListNotifier.addListener(() {
-      tripslist = tripListNotifier.value;
-      sortTrips();
+      tripslist = tripListNotifier.value.toList();
+      // .where((trip) =>
+      //     trip.startdate!.isAfter(DateTime.now()) ||
+      //     trip.startdate!.isAtSameMomentAs(DateTime.now()))
+      // .toList();
+      // sortTrips();
     });
   }
 
   void sortTrips() {
     tripslist.sort((a, b) => a.startdate!.compareTo(b.startdate!));
+    // tripslist = tripslist.where((trip) => !trip.isPastTrip).toList();
   }
 
   void searchTrips(String datas) {
@@ -96,85 +100,81 @@ class _TripScreenState extends State<TripScreen> {
                 if (tripslist.isNotEmpty) {
                   return ListView.builder(
                     itemBuilder: (context, index) {
-                      trip = tripslist[index];
+                      var trip = tripslist[index];
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           height: 100,
-                          child: Expanded(
-                            child: Card(
-                              color: Color.fromARGB(255, 109, 109, 143),
-                              child: ListTile(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ViewTripDetails(
-                                              trips: tripList[index])));
-                                },
-                                leading: trip.image == ''
-                                    ? Container(
-                                        width: 100,
-                                        height: 130,
-                                        //color: Colors.white,
-                                        child: Icon(Icons.trip_origin),
-                                      )
-                                    : Container(
-                                        width: 100,
-                                        height: 130,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          child: Expanded(
-                                            child: Image.file(
-                                              File(trip.image!),
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
+                          child: Card(
+                            color: Color.fromARGB(255, 109, 109, 143),
+                            child: ListTile(
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 6, horizontal: 10),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ViewTripDetails(trips: trip)));
+                              },
+                              leading: trip.image == ''
+                                  ? Container(
+                                      width: 100,
+                                      height: 130,
+                                      //color: Colors.white,
+                                      child: Icon(Icons.trip_origin),
+                                    )
+                                  : Container(
+                                      width: 100,
+                                      height: 130,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: Image.file(
+                                          File(trip.image!),
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
-                                title: Text(
-                                  "${trip.destination}",
-                                  style: TextStyle(color: Colors.white),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                subtitle: Text(
-                                  "${trip.tripname}",
-                                  style: TextStyle(color: Colors.white),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                trailing: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditScreen(
-                                                        tripss: tripList[index],
-                                                        id: tripList[index]
-                                                                .id ??
-                                                            0,
-                                                      )));
-                                        },
-                                        icon: Icon(
-                                          Icons.edit,
-                                          color: Colors.black,
-                                        )),
-                                    IconButton(
+                                    ),
+                              title: Text(
+                                "${trip.destination}",
+                                style: TextStyle(color: Colors.white),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              subtitle: Text(
+                                "${trip.tripname}",
+                                style: TextStyle(color: Colors.white),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
                                       onPressed: () {
-                                        deleteAlertDialog(
-                                            context, tripList[index].id!);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    EditScreen(
+                                                      tripss: tripList[index],
+                                                      id: tripList[index].id ??
+                                                          0,
+                                                    )));
                                       },
                                       icon: Icon(
-                                        Icons.delete,
-                                        color: Colors.red,
-                                      ),
+                                        Icons.edit,
+                                        color: Colors.black,
+                                      )),
+                                  IconButton(
+                                    onPressed: () {
+                                      deleteAlertDialog(
+                                          context, tripList[index].id!);
+                                    },
+                                    icon: Icon(
+                                      Icons.delete,
+                                      color: Colors.red,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),

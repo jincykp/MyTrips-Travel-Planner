@@ -46,12 +46,13 @@ class TripFormFields extends StatelessWidget {
   String? Function(String?)? validator;
   Widget? prefixIcon;
 
-  TripFormFields(
-      {super.key,
-      required this.controller,
-      required this.hintText,
-      required this.validator,
-      this.prefixIcon});
+  TripFormFields({
+    super.key,
+    required this.controller,
+    required this.hintText,
+    required this.validator,
+    this.prefixIcon,
+  });
 
   @override
   Widget build(BuildContext context) {

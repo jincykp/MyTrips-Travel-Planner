@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_trips/SCREENS/LOGINSCREENS/login.dart';
+import 'package:my_trips/screens/homepage.dart';
+import 'package:my_trips/screens/loginscreens/create.dart';
 
 class OnBoardingThree extends StatelessWidget {
   const OnBoardingThree({super.key});
@@ -37,7 +39,7 @@ class OnBoardingThree extends StatelessWidget {
               child: TextButton(
                   onPressed: () {
                     Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => LoggIn()));
+                        MaterialPageRoute(builder: (context) => BottomNav()));
                   },
                   child: Text(
                     'Next>>>',

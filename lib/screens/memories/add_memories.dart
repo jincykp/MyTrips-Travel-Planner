@@ -76,6 +76,7 @@ class _AddMemoriesScreenState extends State<AddMemoriesScreen> {
                       if (value == null || value.isEmpty) {
                         return "Trip name is required";
                       }
+                      return null;
                     }),
                 SizedBox(
                   height: 20,
@@ -130,6 +131,7 @@ class _AddMemoriesScreenState extends State<AddMemoriesScreen> {
                       if (value == null || value.isEmpty) {
                         return "experience is required";
                       }
+                      return null;
                     }),
                 SizedBox(
                   height: 50,
@@ -200,5 +202,6 @@ class _AddMemoriesScreenState extends State<AddMemoriesScreen> {
       });
       return _picked;
     }
+    return null;
   }
 }

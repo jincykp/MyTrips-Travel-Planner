@@ -19,8 +19,12 @@ class _MemoryScreenState extends State<MemoryScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    memoryNotifier.addListener(() {
+      setState(() {
+        memoryList = memoryNotifier.value;
+      });
+    });
     updateMemories();
-    memoryList = memoryNotifier.value;
   }
 
   Widget build(BuildContext context) {
@@ -35,7 +39,7 @@ class _MemoryScreenState extends State<MemoryScreen> {
       body: Column(
         children: [
           Expanded(
-            child: ValueListenableBuilder(
+            child: ValueListenableBuilder<List<MemoryModel>>(
               valueListenable: memoryNotifier,
               builder: (context, value, child) => GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

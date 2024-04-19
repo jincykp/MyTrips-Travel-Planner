@@ -5,6 +5,9 @@ import 'package:my_trips/SCREENS/loginscreens/signin.dart';
 import 'package:my_trips/database/functions/user_db_functions.dart';
 
 import 'package:my_trips/database/model/data_model.dart';
+import 'package:my_trips/screens/settings_screens/about_us.dart';
+import 'package:my_trips/screens/settings_screens/contact_us.dart';
+import 'package:my_trips/screens/settings_screens/privacy_policy.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -40,6 +43,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
           "PROFILE",
         ),
         backgroundColor: Color.fromARGB(255, 6, 6, 37),
+      ),
+      drawer: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 15, 15, 15),
+        child: Drawer(
+          backgroundColor: Color.fromARGB(255, 145, 145, 190),
+          child: ListView(children: [
+            ListTile(
+              leading: Icon(
+                Icons.settings,
+                size: 35,
+              ),
+              title: Text(
+                "Settings",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              ),
+            ),
+            ListTile(
+                leading: Icon(Icons.privacy_tip),
+                title: Text(
+                  "Privacy Policy",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PrivacyPolicyScreen()));
+                }),
+            ListTile(
+                leading: Icon(Icons.info),
+                title: Text(
+                  "About Us",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AboutScreen()));
+                }),
+            ListTile(
+                leading: Icon(Icons.contact_support_sharp),
+                title: Text(
+                  "Contact Us",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ContactScreen()));
+                })
+          ]),
+        ),
       ),
       body: Center(
         child: Card(
@@ -104,6 +157,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   style: TextStyle(color: Colors.white)),
                             ),
                             Divider(thickness: 2),
+                            // Padding(
+                            //   padding: const EdgeInsets.all(8.0),
+                            //   child: Row(
+                            //     children: [
+                            //       Text(
+                            //         "Settings",
+                            //         style: TextStyle(
+                            //             color: Colors.white,
+                            //             fontWeight: FontWeight.bold),
+                            //       ),
+                            //       IconButton(
+                            //           onPressed: () {},
+                            //           icon: Icon(
+                            //             Icons.settings,
+                            //             color: const Color.fromARGB(
+                            //                 255, 122, 112, 112),
+                            //           )),
+                            //     ],
+                            //   ),
+                            // ),
+                            // Divider(thickness: 2),
                           ],
                         );
                       } else {

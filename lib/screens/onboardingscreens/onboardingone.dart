@@ -25,18 +25,20 @@ class _OnBoardingoneState extends State<OnBoardingone> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(15.0),
                     child: Text(
-                      "'''Embark on your journey with our travel app, where every destination is a new adventure waiting to unfold'''",
+                      "'Embark on your  journey with our travel app, where every destination is a new adventure waiting to unfold'",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 27,
+                        fontSize: 23,
                       ),
                     ),
                   ),
                   Container(
                     child: Lottie.asset(
-                        "assets/animations/Animation - 1709649193707.json"),
+                        "assets/animations/Animation - 1709649193707.json",
+                        height: 200,
+                        width: 200),
                   )
                 ],
               ),

@@ -47,16 +47,12 @@ class _AddTripScreenState extends State<AddTripScreen> {
                         width: 140,
                         height: 60,
                         color: Colors.white,
-                        child: Positioned(
-                          bottom: 4,
-                          right: 0,
-                          child: IconButton(
-                            onPressed: () {
-                              addtripImage();
-                            },
-                            icon: Icon(Icons.add_a_photo_outlined),
-                            iconSize: 55,
-                          ),
+                        child: IconButton(
+                          onPressed: () {
+                            addtripImage();
+                          },
+                          icon: Icon(Icons.add_a_photo_outlined),
+                          iconSize: 55,
                         ))
                     : Container(
                         width: 100,

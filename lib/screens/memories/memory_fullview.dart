@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:my_trips/database/functions/memories_db_functions.dart';
 import 'package:my_trips/database/model/memories_model.dart';
+import 'package:my_trips/screens/memories.dart';
 
 class MemoryFullview extends StatefulWidget {
   final MemoryModel fullview;
@@ -40,17 +41,17 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                   borderRadius: BorderRadius.circular(12)),
               child: Container(
                 width: 450,
-                height: 400,
+                height: 500,
                 child: Padding(
                   padding: const EdgeInsets.all(14.0),
                   child: Column(
                     children: [
                       memoryListss.MemoryImage == null
                           ? Container(
-                              height: 100, width: 400, child: Icon(Icons.image))
+                              height: 300, width: 400, child: Icon(Icons.image))
                           : Container(
                               width: 350,
-                              height: 190,
+                              height: 300,
                               child: memoryListss.MemoryImage != null
                                   ? Image.file(
                                       File(memoryListss.MemoryImage),
@@ -62,7 +63,8 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                       ),
                       Row(
                         children: [
-                          Flexible(
+                          Expanded(
+                            flex: 1,
                             child: Text(
                               "Trip Name:",
                               style: TextStyle(
@@ -158,6 +160,9 @@ class _MemoryFullviewState extends State<MemoryFullview> {
           print(id);
           deleteMemory(id);
           Navigator.of(context).pop();
+          Navigator.of(context).pop();
+          // Navigator.pushReplacement(
+          //     context, MaterialPageRoute(builder: (context) => MemoryScreen()));
         },
         child: Text("Delete"));
     AlertDialog alert = AlertDialog(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:my_trips/SCREENS/onboardingscreens/onboardingone.dart';
+import 'package:my_trips/screens/onboardingscreens/onboardingtwo.dart';
 
 class ScreenSplash extends StatefulWidget {
   const ScreenSplash({super.key});
@@ -49,7 +50,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
               SizedBox(height: 50),
               Center(
                 child: Container(
-                  child: Lottie.asset("assets/animations/travel1.json"),
+                  child: Lottie.asset("assets/animations/location.json"),
                 ),
               )
             ],
@@ -66,14 +67,8 @@ class _ScreenSplashState extends State<ScreenSplash> {
   }
 
   Future<void> gotoLogin() async {
-    // WidgetsFlutterBinding.ensureInitialized();
-    // final dir = await path.getApplicationDocumentsDirectory();
-    // Hive.init(dir.path);
-    // Hive.registerAdapter(UserModelAdapter());
-    // Hive.registerAdapter(TripModelAdapter());
-    // await Hive.initFlutter('hive_db');
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 4));
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (contex) => OnBoardingone()));
+        context, MaterialPageRoute(builder: (contex) => OnBoardingTwo()));
   }
 }

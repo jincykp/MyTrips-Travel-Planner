@@ -28,12 +28,12 @@ class OnBoardingTwo extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    width: 400,
-                    height: 400,
-                    alignment: Alignment.bottomCenter,
-                    child: Lottie.asset("assets/animations/location.json"),
-                  )
+                  // Container(
+                  //   width: 400,
+                  //   height: 400,
+                  //   alignment: Alignment.bottomCenter,
+                  //   child: Lottie.asset("assets/animations/location.json"),
+                  // )
                 ],
               ),
             ),
