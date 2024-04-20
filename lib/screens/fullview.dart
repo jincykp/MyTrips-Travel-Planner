@@ -7,8 +7,8 @@ import 'package:my_trips/screens/plans/plans.dart';
 
 class ViewTripDetails extends StatefulWidget {
   final TripModel trips;
-
-  ViewTripDetails({super.key, required this.trips});
+  final List<TripModel>? planList;
+  ViewTripDetails({super.key, required this.trips, required this.planList});
 
   @override
   State<ViewTripDetails> createState() => _ViewTripDetailsState();
@@ -17,11 +17,68 @@ class ViewTripDetails extends StatefulWidget {
 class _ViewTripDetailsState extends State<ViewTripDetails> {
   var tripListss;
   bool showPlanSection = false;
+  List<TripModel> planList = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     tripListss = widget.trips;
+  }
+
+  Widget buildPlanDetails(TripModel plan) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 10),
+        Row(
+          children: [
+            SizedBox(
+              width: 130,
+              child: Text(
+                "Activity Type:",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            Text(
+              plan.actvityType ?? '',
+              style: TextStyle(color: Colors.white),
+            )
+          ],
+        ),
+        Row(
+          children: [
+            SizedBox(
+              width: 130,
+              child: Text(
+                "Title:",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            Text(
+              plan.title ?? '',
+              style: TextStyle(color: Colors.white),
+            )
+          ],
+        ),
+        Row(
+          children: [
+            SizedBox(
+              width: 130,
+              child: Text(
+                "Time:",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            Text(
+              plan.time ?? '',
+              style: TextStyle(color: Colors.white),
+            )
+          ],
+        ),
+        SizedBox(height: 10),
+        Divider(color: Colors.white),
+      ],
+    );
   }
 
   @override
@@ -179,27 +236,33 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                       SizedBox(
                         height: 20,
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            showPlanSection = true;
-                          });
-                          Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => addPlanScreen(
-                                          planss: tripListss,
-                                          id: tripListss.id)))
-                              .then((value) => null);
-                        },
-                        child: Text(
-                          "Add Plan",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        style: ButtonStyle(
+                      if (planList.isEmpty) ...[
+                        ElevatedButton(
+                          onPressed: () async {
+                            var addedPlan = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => addPlanScreen(
+                                        planss: tripListss,
+                                        id: tripListss.id)));
+                            if (addedPlan != null) {
+                              setState(() {
+                                planList.add(addedPlan);
+                                showPlanSection = true;
+                              });
+                              print('Added plan=$addedPlan');
+                            }
+                          },
+                          child: Text(
+                            "Add Plan",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          style: ButtonStyle(
                             backgroundColor:
-                                MaterialStatePropertyAll(Colors.purple)),
-                      ),
+                                MaterialStatePropertyAll(Colors.purple),
+                          ),
+                        ),
+                      ],
                       if (showPlanSection) ...[
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -219,51 +282,58 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                         SizedBox(
                           height: 10,
                         ),
-                        Row(
+                        Column(
                           children: [
-                            SizedBox(
-                              width: 130,
-                              child: Text(
-                                "Activity Type:",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            Text(
-                              "",
-                              style: TextStyle(color: Colors.white),
-                            )
+                            ...planList
+                                .map((plan) => buildPlanDetails(plan))
+                                .toList(),
                           ],
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 130,
-                              child: Text(
-                                "Title:",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            Text(
-                              "",
-                              style: TextStyle(color: Colors.white),
-                            )
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 130,
-                              child: Text(
-                                "Time:",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            Text(
-                              "",
-                              style: TextStyle(color: Colors.white),
-                            )
-                          ],
-                        ),
+                        )
+                        //   Row(
+                        //     children: [
+                        //       SizedBox(
+                        //         width: 130,
+                        //         child: Text(
+                        //           "Activity Type:",
+                        //           style: TextStyle(color: Colors.white),
+                        //         ),
+                        //       ),
+                        //       Text(
+                        //         "",
+                        //         style: TextStyle(color: Colors.white),
+                        //       )
+                        //     ],
+                        //   ),
+                        //   Row(
+                        //     children: [
+                        //       SizedBox(
+                        //         width: 130,
+                        //         child: Text(
+                        //           "Title:",
+                        //           style: TextStyle(color: Colors.white),
+                        //         ),
+                        //       ),
+                        //       Text(
+                        //         "",
+                        //         style: TextStyle(color: Colors.white),
+                        //       )
+                        //     ],
+                        //   ),
+                        //   Row(
+                        //     children: [
+                        //       SizedBox(
+                        //         width: 130,
+                        //         child: Text(
+                        //           "Time:",
+                        //           style: TextStyle(color: Colors.white),
+                        //         ),
+                        //       ),
+                        //       Text(
+                        //         "",
+                        //         style: TextStyle(color: Colors.white),
+                        //       )
+                        //     ],
+                        //   ),
                       ],
                     ],
                   ),
