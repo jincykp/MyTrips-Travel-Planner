@@ -6,8 +6,12 @@ import 'package:my_trips/screens/memories.dart';
 
 class MemoryFullview extends StatefulWidget {
   final MemoryModel fullview;
-  int id;
-  MemoryFullview({super.key, required this.fullview, required this.id});
+
+  // List<String> imagePath;
+  MemoryFullview({
+    super.key,
+    required this.fullview,
+  });
 
   @override
   State<MemoryFullview> createState() => _MemoryFullviewState();
@@ -31,120 +35,136 @@ class _MemoryFullviewState extends State<MemoryFullview> {
             "MEMORY DETAILS",
           ),
         ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Card(
-              color: Color.fromARGB(255, 156, 156, 192),
-              // elevation: 50,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)),
-              child: Container(
-                width: 450,
-                height: 500,
+        body: Column(
+          children: [
+            Expanded(
+              child: Center(
                 child: Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: Column(
-                    children: [
-                      memoryListss.MemoryImage == null
-                          ? Container(
-                              height: 300, width: 400, child: Icon(Icons.image))
-                          : Container(
-                              width: 350,
-                              height: 300,
-                              child: memoryListss.MemoryImage != null
-                                  ? Image.file(
-                                      File(memoryListss.MemoryImage),
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Container()),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Text(
-                              "Trip Name:",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    color: Color.fromARGB(255, 156, 156, 192),
+                    // elevation: 50,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Container(
+                      width: 450,
+                      // height: 600,
+                      child: Padding(
+                        padding: const EdgeInsets.all(14.0),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 20,
                             ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Text(
-                            memoryListss.MemoryTripName,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            width: 150,
-                          ),
-                          IconButton(
-                              onPressed: () {
-                                deleteAlertDialog(context, memoryListss.id);
-                                //Navigator.of(context).pop();
-                              },
-                              icon: Icon(
-                                Icons.delete,
-                                color: Color.fromARGB(255, 143, 36, 28),
-                              ))
-                        ],
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    "Trip Name:",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  memoryListss.MemoryTripName,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  width: 150,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Trip Date:",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  memoryListss.MemoryDate,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Trip Experience:",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  memoryListss.MemoryExperience,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                            SizedBox(height: 20),
+                            Expanded(
+                              child: Container(
+                                child: GridView.builder(
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 1),
+                                    itemCount: memoryListss.MemoryImage.length,
+                                    itemBuilder: (context, index) {
+                                      print(memoryListss.MemoryImage[index]);
+                                      return Image.file(
+                                        File(memoryListss.MemoryImage[index]),
+                                        fit: BoxFit.cover,
+                                      );
+                                    }),
+                              ),
+                            ),
+                            // memoryListss.MemoryImage == null
+                            //     ? Container(
+                            //         height: 300,
+                            //         width: 400,
+                            //         child: Icon(Icons.image))
+                            //     : Container(
+                            //         width: 350,
+                            //         height: 300,
+                            //         child: memoryListss.MemoryImage != null
+                            //             ? Image.file(
+                            //                 File(memoryListss.MemoryImage),
+                            //                 fit: BoxFit.cover,
+                            //               )
+                            //             : Container()),
+                          ],
+                        ),
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            "Trip Date:",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Text(
-                            memoryListss.MemoryDate,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            "Trip Experience:",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Text(
-                            memoryListss.MemoryExperience,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
+          ],
         ));
   }
 

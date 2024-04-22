@@ -46,12 +46,20 @@ Future<void> editTrip(TripModel editedTrips) async {
   updateTrip();
 }
 
-ValueNotifier<List<TripModel>> addplanNotifier = ValueNotifier([]);
-Future<void> addPlans(TripModel datass) async {
-  print("plan db called");
+// ValueNotifier<List<TripModel>> addplanNotifier = ValueNotifier([]);
+// Future<void> addPlans(TripModel datass) async {
+//   print("plan db called");
+//   final tripDataBox = await Hive.openBox<TripModel>('trip_data');
+//   await tripDataBox.add(datass);
+//   addplanNotifier.value.add(datass);
+//   userListNotifier.notifyListeners();
+//   print("plan added");
+// }
+Future<void> addPlans(TripModel value) async {
   final tripDataBox = await Hive.openBox<TripModel>('trip_data');
-  await tripDataBox.add(datass);
-  addplanNotifier.value.add(datass);
-  userListNotifier.notifyListeners();
-  print("plan added");
+  value.id = await tripDataBox.add(value); // Add to the box and get the ID
+  tripDataBox.put(value.id, value); // Put the data with the assigned ID
+  tripListNotifier.value.add(value); // Add to the ValueNotifier list
+  tripListNotifier.notifyListeners(); // Notify listeners of the change
+  print("plan addedddd");
 }

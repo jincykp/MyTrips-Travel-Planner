@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:my_trips/database/functions/memories_db_functions.dart';
 import 'package:my_trips/database/model/memories_model.dart';
 import 'package:my_trips/screens/loginscreens/support.dart';
@@ -19,7 +20,11 @@ class _AddMemoriesScreenState extends State<AddMemoriesScreen> {
   final memoryDateController = TextEditingController();
   final memoryExperienceController = TextEditingController();
   String? MemoryPhotos;
+  bool selecetedimg = false;
   DateTime? MemoryDate;
+  List<String> imagePath = [];
+  XFile? selectedImage;
+  bool hasSelectedImage = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,27 +41,30 @@ class _AddMemoriesScreenState extends State<AddMemoriesScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                MemoryPhotos == null
-                    ? Container(
-                        width: 140,
-                        height: 60,
-                        child: IconButton(
-                          onPressed: () {
-                            addMemoryImage();
-                          },
-                          icon: Icon(Icons.add_a_photo_outlined),
-                          iconSize: 50,
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      ...List.generate(
+                          imagePath.length,
+                          (index) => CircleAvatar(
+                                radius: 50,
+                                backgroundImage: imagePath.isNotEmpty
+                                    ? FileImage(File(imagePath[index]))
+                                    : const AssetImage("") as ImageProvider,
+                              )),
+                      IconButton.filled(
+                        onPressed: () {
+                          addMemoryImage(context);
+                        },
+                        icon: Icon(
+                          Icons.add_a_photo,
+                          size: 50,
                         ),
-                      )
-                    : Container(
-                        width: 200,
-                        height: 90,
-                        child: Image.file(
-                          File(MemoryPhotos!),
-                          fit: BoxFit.cover,
-                        ),
-                        color: Colors.white,
                       ),
+                    ],
+                  ),
+                ),
                 SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -164,7 +172,7 @@ class _AddMemoriesScreenState extends State<AddMemoriesScreen> {
     final memoryydate = memoryDateController.text.trim();
     final memoryyexperience = memoryExperienceController.text.trim();
     final memories = MemoryModel(
-        MemoryImage: MemoryPhotos.toString(),
+        MemoryImage: imagePath.toString(),
         MemoryTripName: memoryyname,
         MemoryDate: memoryydate,
         MemoryExperience: memoryyexperience);
@@ -177,13 +185,18 @@ class _AddMemoriesScreenState extends State<AddMemoriesScreen> {
     Navigator.of(context).pop(memories);
   }
 
-  addMemoryImage() async {
+  Future<void> addMemoryImage(BuildContext context) async {
     final imagePicker = ImagePicker();
-    final pickedImage =
-        await imagePicker.pickImage(source: ImageSource.gallery);
+    final pickedImage = await imagePicker.pickMultiImage();
     if (pickedImage != null) {
       setState(() {
-        MemoryPhotos = pickedImage.path;
+        imagePath.clear();
+        for (final multiImg in pickedImage) {
+          if (multiImg != null) {
+            imagePath.add(File(multiImg.path).path);
+          }
+        }
+        selecetedimg = imagePath.isNotEmpty;
       });
     }
   }

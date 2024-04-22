@@ -7,7 +7,9 @@ import 'package:my_trips/screens/plans/plans.dart';
 
 class ViewTripDetails extends StatefulWidget {
   final TripModel trips;
+
   final List<TripModel>? planList;
+
   ViewTripDetails({super.key, required this.trips, required this.planList});
 
   @override
@@ -17,12 +19,16 @@ class ViewTripDetails extends StatefulWidget {
 class _ViewTripDetailsState extends State<ViewTripDetails> {
   var tripListss;
   bool showPlanSection = false;
-  List<TripModel> planList = [];
+  List<TripModel> planListsss = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     tripListss = widget.trips;
+    planListsss = widget.planList ?? [];
+    if (planListsss.isNotEmpty) {
+      showPlanSection = true;
+    }
   }
 
   Widget buildPlanDetails(TripModel plan) {
@@ -236,7 +242,7 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                       SizedBox(
                         height: 20,
                       ),
-                      if (planList.isEmpty) ...[
+                      if (planListsss.isEmpty) ...[
                         ElevatedButton(
                           onPressed: () async {
                             var addedPlan = await Navigator.push(
@@ -247,7 +253,7 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                                         id: tripListss.id)));
                             if (addedPlan != null) {
                               setState(() {
-                                planList.add(addedPlan);
+                                planListsss.add(addedPlan);
                                 showPlanSection = true;
                               });
                               print('Added plan=$addedPlan');
@@ -284,56 +290,11 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                         ),
                         Column(
                           children: [
-                            ...planList
+                            ...planListsss
                                 .map((plan) => buildPlanDetails(plan))
                                 .toList(),
                           ],
                         )
-                        //   Row(
-                        //     children: [
-                        //       SizedBox(
-                        //         width: 130,
-                        //         child: Text(
-                        //           "Activity Type:",
-                        //           style: TextStyle(color: Colors.white),
-                        //         ),
-                        //       ),
-                        //       Text(
-                        //         "",
-                        //         style: TextStyle(color: Colors.white),
-                        //       )
-                        //     ],
-                        //   ),
-                        //   Row(
-                        //     children: [
-                        //       SizedBox(
-                        //         width: 130,
-                        //         child: Text(
-                        //           "Title:",
-                        //           style: TextStyle(color: Colors.white),
-                        //         ),
-                        //       ),
-                        //       Text(
-                        //         "",
-                        //         style: TextStyle(color: Colors.white),
-                        //       )
-                        //     ],
-                        //   ),
-                        //   Row(
-                        //     children: [
-                        //       SizedBox(
-                        //         width: 130,
-                        //         child: Text(
-                        //           "Time:",
-                        //           style: TextStyle(color: Colors.white),
-                        //         ),
-                        //       ),
-                        //       Text(
-                        //         "",
-                        //         style: TextStyle(color: Colors.white),
-                        //       )
-                        //     ],
-                        //   ),
                       ],
                     ],
                   ),

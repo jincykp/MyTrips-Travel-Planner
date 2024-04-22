@@ -16,6 +16,7 @@ class TripScreen extends StatefulWidget {
 class _TripScreenState extends State<TripScreen> {
   //late TripModel triplist;
   late List<TripModel> tripslist = [];
+  late List<TripModel> planList = [];
 
   String reg = '';
 
@@ -29,11 +30,6 @@ class _TripScreenState extends State<TripScreen> {
 
     tripListNotifier.addListener(() {
       tripslist = tripListNotifier.value.toList();
-      // .where((trip) =>
-      //     trip.startdate!.isAfter(DateTime.now()) ||
-      //     trip.startdate!.isAtSameMomentAs(DateTime.now()))
-      // .toList();
-      // sortTrips();
     });
   }
 
@@ -114,8 +110,10 @@ class _TripScreenState extends State<TripScreen> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            ViewTripDetails(trips: trip)));
+                                        builder: (context) => ViewTripDetails(
+                                              trips: trip,
+                                              planList: planList,
+                                            )));
                               },
                               leading: trip.image == ''
                                   ? Container(
@@ -141,7 +139,7 @@ class _TripScreenState extends State<TripScreen> {
                                 overflow: TextOverflow.ellipsis,
                               ),
                               subtitle: Text(
-                                "${trip.tripname}",
+                                "${trip.startdate}-${trip.enddate}",
                                 style: TextStyle(color: Colors.white),
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -186,10 +184,11 @@ class _TripScreenState extends State<TripScreen> {
                 } else {
                   return Center(
                     child: Text(
-                      "No Trips",
+                      "Plan your Trips",
                       style: TextStyle(
-                          color: Color.fromARGB(255, 6, 6, 37),
-                          fontWeight: FontWeight.bold),
+                        color: Color.fromARGB(255, 6, 6, 37),
+                        fontWeight: FontWeight.normal,
+                      ),
                     ),
                   );
                 }
@@ -250,8 +249,8 @@ class _TripScreenState extends State<TripScreen> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       backgroundColor: Colors.white,
-      title: Text("Delete This Trip"),
-      content: Text("Do you want to delete this trip?"),
+      title: Text("Cancel This Trip"),
+      content: Text("Do you want to cancel this trip?"),
       actions: [
         cancelButton,
         continueButton,

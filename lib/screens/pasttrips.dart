@@ -14,7 +14,7 @@ class PastTripScreen extends StatefulWidget {
 
 class _PastTripScreenState extends State<PastTripScreen> {
   late List<TripModel> tripslist = [];
-  var trip;
+
   @override
   void initState() {
     tripslist = tripListNotifier.value
@@ -43,7 +43,7 @@ class _PastTripScreenState extends State<PastTripScreen> {
                 if (tripslist.isNotEmpty) {
                   return ListView.builder(
                     itemBuilder: (context, index) {
-                      trip = tripslist[index];
+                      var trip = tripslist[index];
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
