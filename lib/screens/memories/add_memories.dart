@@ -172,7 +172,7 @@ class _AddMemoriesScreenState extends State<AddMemoriesScreen> {
     final memoryydate = memoryDateController.text.trim();
     final memoryyexperience = memoryExperienceController.text.trim();
     final memories = MemoryModel(
-        MemoryImage: imagePath.toString(),
+        MemoryImage: imagePath,
         MemoryTripName: memoryyname,
         MemoryDate: memoryydate,
         MemoryExperience: memoryyexperience);

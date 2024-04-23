@@ -69,8 +69,8 @@ class _MemoryScreenState extends State<MemoryScreen> {
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     MemoryFullview(
-                                                        fullview:
-                                                            value[index])));
+                                                      fullview: value[index],
+                                                    )));
                                       },
                                       icon: Icon(
                                         Icons.folder,
@@ -80,7 +80,10 @@ class _MemoryScreenState extends State<MemoryScreen> {
                                   Text(value[index].MemoryTripName ??
                                       'unnamed '),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      deleteAlertDialog(
+                                          context, value[index].id!);
+                                    },
                                     icon: Icon(Icons.delete),
                                   )
                                 ],
@@ -136,7 +139,7 @@ class _MemoryScreenState extends State<MemoryScreen> {
           print(id);
           deleteMemory(id);
           Navigator.of(context).pop();
-          Navigator.of(context).pop();
+          //  Navigator.of(context).pop();
           // Navigator.pushReplacement(
           //     context, MaterialPageRoute(builder: (context) => MemoryScreen()));
         },

@@ -7,11 +7,8 @@ import 'package:my_trips/screens/memories.dart';
 class MemoryFullview extends StatefulWidget {
   final MemoryModel fullview;
 
-  // List<String> imagePath;
-  MemoryFullview({
-    super.key,
-    required this.fullview,
-  });
+  //List<String> imagePath;
+  MemoryFullview({super.key, required this.fullview});
 
   @override
   State<MemoryFullview> createState() => _MemoryFullviewState();
@@ -117,11 +114,15 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                                 SizedBox(
                                   width: 20,
                                 ),
-                                Text(
-                                  memoryListss.MemoryExperience,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
+                                Expanded(
+                                  child: Text(
+                                    memoryListss.MemoryExperience,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 3,
+                                  ),
                                 )
                               ],
                             ),
@@ -135,27 +136,16 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                                     itemCount: memoryListss.MemoryImage.length,
                                     itemBuilder: (context, index) {
                                       print(memoryListss.MemoryImage[index]);
-                                      return Image.file(
-                                        File(memoryListss.MemoryImage[index]),
-                                        fit: BoxFit.cover,
+                                      return Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Image.file(
+                                          File(memoryListss.MemoryImage[index]),
+                                          fit: BoxFit.cover,
+                                        ),
                                       );
                                     }),
                               ),
                             ),
-                            // memoryListss.MemoryImage == null
-                            //     ? Container(
-                            //         height: 300,
-                            //         width: 400,
-                            //         child: Icon(Icons.image))
-                            //     : Container(
-                            //         width: 350,
-                            //         height: 300,
-                            //         child: memoryListss.MemoryImage != null
-                            //             ? Image.file(
-                            //                 File(memoryListss.MemoryImage),
-                            //                 fit: BoxFit.cover,
-                            //               )
-                            //             : Container()),
                           ],
                         ),
                       ),
@@ -166,35 +156,5 @@ class _MemoryFullviewState extends State<MemoryFullview> {
             ),
           ],
         ));
-  }
-
-  deleteAlertDialog(BuildContext context, int id) {
-    Widget cancelButton = TextButton(
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-      child: Text("Cancel"),
-    );
-    Widget continueButton = TextButton(
-        onPressed: () {
-          print(id);
-          deleteMemory(id);
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
-          // Navigator.pushReplacement(
-          //     context, MaterialPageRoute(builder: (context) => MemoryScreen()));
-        },
-        child: Text("Delete"));
-    AlertDialog alert = AlertDialog(
-      backgroundColor: Colors.white,
-      title: Text("Delete This Memory"),
-      content: Text("Do you want to delete this memory?"),
-      actions: [cancelButton, continueButton],
-    );
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        });
   }
 }

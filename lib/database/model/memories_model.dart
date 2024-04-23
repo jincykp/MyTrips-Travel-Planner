@@ -6,7 +6,7 @@ class MemoryModel extends HiveObject {
   @HiveField(0)
   int? id;
   @HiveField(1)
-  final String? MemoryImage;
+  List<String>? MemoryImage;
   @HiveField(2)
   final String? MemoryTripName;
   @HiveField(3)

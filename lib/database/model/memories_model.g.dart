@@ -18,7 +18,7 @@ class MemoryModelAdapter extends TypeAdapter<MemoryModel> {
     };
     return MemoryModel(
       id: fields[0] as int?,
-      MemoryImage: fields[1] as String?,
+      MemoryImage: (fields[1] as List?)?.cast<String>(),
       MemoryTripName: fields[2] as String?,
       MemoryDate: fields[3] as String?,
       MemoryExperience: fields[4] as String?,

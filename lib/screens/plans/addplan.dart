@@ -218,17 +218,19 @@ class _addPlanScreenState extends State<addPlanScreen> {
     //     TimeOfDay.fromDateTime(DateTime.parse(timeController.text.trim()));
     String timetime = _time!.format(context);
     TripModel addplantrip = TripModel(
-        id: widget.planss.id,
-        destination: widget.planss.destination,
-        startdate: widget.planss.startdate,
-        enddate: widget.planss.enddate,
-        tripname: widget.planss.tripname,
-        description: widget.planss.description,
-        image: widget.planss.image,
-        actvityType: activitytypeee,
-        title: titletitle,
-        time: timetime);
-    await addPlans(addplantrip);
+      id: widget.planss.id,
+      destination: widget.planss.destination,
+      startdate: widget.planss.startdate,
+      enddate: widget.planss.enddate,
+      tripname: widget.planss.tripname,
+      description: widget.planss.description,
+      image: widget.planss.image,
+      actvityType: activitytypeee,
+      title: titletitle,
+      time: timetime,
+    );
+    await editTrip(addplantrip);
+    //await addPlans(addplantrip);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text("Plans added successfully"),
@@ -236,9 +238,5 @@ class _addPlanScreenState extends State<addPlanScreen> {
       ),
     );
     Navigator.of(context).pop(addplantrip);
-    // Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => ViewTripDetails(trips: addplantrip)));
   }
 }
