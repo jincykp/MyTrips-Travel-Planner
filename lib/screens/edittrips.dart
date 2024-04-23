@@ -37,15 +37,10 @@ class _EditScreenState extends State<EditScreen> {
     endingDate = widget.tripss.enddate;
     _enddateController.text =
         DateFormat('dd-MM-yyyy').format(widget.tripss.enddate!);
-    // DateTime? startDate = DateTime.parse(_startdateController.text.trim());
-    // DateTime? endDate = DateTime.parse(_enddateController.text.trim());
     _destinationController.text = widget.tripss.destination!;
-    // _startdateController.text = startDate.toString();
-    // _enddateController.text = endDate.toString();
     _tripnameController.text = widget.tripss.tripname!;
     _descriptionController.text = widget.tripss.description!;
     imagee = widget.tripss.image;
-
     super.initState();
   }
 

@@ -10,12 +10,13 @@ Future<void> addUserProfile(UserModel value) async {
   userListNotifier.notifyListeners();
   print("added");
 }
-// Future<void> getAllUSerProfile() async {
-//   final userDataBox = await Hive.openBox<UserModel>('user_data');
-//   userListNotifier.value.clear();
-//   userListNotifier.value.addAll(userDataBox.values);
-//   userListNotifier.notifyListeners();
-// }
+
+Future<void> getAllUSerProfile() async {
+  final userDataBox = await Hive.openBox<UserModel>('user_data');
+  userListNotifier.value.clear();
+  userListNotifier.value.addAll(userDataBox.values);
+  userListNotifier.notifyListeners();
+}
 
 Future<UserModel?> getDetails(
   String email,

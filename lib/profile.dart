@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_trips/SCREENS/loginscreens/signin.dart';
 import 'package:my_trips/database/functions/user_db_functions.dart';
-
 import 'package:my_trips/database/model/data_model.dart';
 import 'package:my_trips/screens/settings_screens/about_us.dart';
 import 'package:my_trips/screens/settings_screens/contact_us.dart';
@@ -11,7 +10,6 @@ import 'package:my_trips/screens/settings_screens/privacy_policy.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
-
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -23,6 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    getAllUSerProfile();
     getUserImage().then((images) {
       if (images.isNotEmpty) {
         setState(() {

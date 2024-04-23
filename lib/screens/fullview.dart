@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:my_trips/database/functions/trip_db_functions.dart';
 import 'package:my_trips/database/model/trip_model.dart';
 import 'package:intl/intl.dart';
 import 'package:my_trips/screens/plans/addplan.dart';
@@ -29,6 +30,8 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
     if (planListsss.isNotEmpty) {
       showPlanSection = true;
     }
+
+    updateTrip();
   }
 
   Widget buildPlanDetails(TripModel plan) {
@@ -105,7 +108,7 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             child: Container(
-              width: 350,
+              width: 400,
               height: 700,
               child: Padding(
                 padding: const EdgeInsets.all(18.0),
@@ -242,60 +245,93 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                       SizedBox(
                         height: 20,
                       ),
-                      if (planListsss.isEmpty) ...[
-                        ElevatedButton(
-                          onPressed: () async {
-                            var addedPlan = await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => addPlanScreen(
-                                        planss: tripListss,
-                                        id: tripListss.id)));
-                            if (addedPlan != null) {
-                              setState(() {
-                                planListsss.add(addedPlan);
-                                showPlanSection = true;
-                              });
-                              print('Added plan=$addedPlan');
-                            }
-                          },
-                          child: Text(
-                            "Add Plan",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStatePropertyAll(Colors.purple),
-                          ),
+
+                      ElevatedButton(
+                        onPressed: () async {
+                          TripModel? addedPlan = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => addPlanScreen(
+                                      planss: tripListss, id: tripListss.id)));
+                          if (addedPlan != null) {
+                            setState(() {
+                              showPlanSection = true;
+                              tripListss = addedPlan.actvityType;
+                              tripListss = addedPlan.title;
+                              tripListss = addedPlan.time;
+                            });
+                            print('Added plan=$addedPlan');
+                          }
+                        },
+                        child: Text(
+                          "Add Plan",
+                          style: TextStyle(color: Colors.white),
                         ),
-                      ],
-                      if (showPlanSection) ...[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll(Colors.purple),
+                        ),
+                      ),
+
+                      Visibility(
+                        visible: widget.trips.actvityType != null,
+                        child: Column(
                           children: [
-                            SizedBox(
-                              width: 100,
-                              child: Text(
-                                "Plans",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 100,
+                                  child: Text(
+                                    "Plans",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Text(
+                              'Activity type:${widget.trips.actvityType}',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Text('Activity type:${widget.trips.title}',
+                                style: TextStyle(color: Colors.white)),
+                            Text(
+                              'Activity type:${widget.trips.time}',
+                              style: TextStyle(color: Colors.white),
                             )
                           ],
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Column(
-                          children: [
-                            ...planListsss
-                                .map((plan) => buildPlanDetails(plan))
-                                .toList(),
-                          ],
-                        )
-                      ],
+                      )
+                      // if (showPlanSection) ...[
+                      //   Row(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       SizedBox(
+                      //         width: 100,
+                      //         child: Text(
+                      //           "Plans",
+                      //           style: TextStyle(
+                      //               color: Colors.white,
+                      //               fontSize: 20,
+                      //               fontWeight: FontWeight.bold),
+                      //         ),
+                      //       )
+                      //     ],
+                      //   ),
+                      //   SizedBox(
+                      //     height: 10,
+                      //   ),
+                      //   Column(
+                      //     children: [
+                      //       ...planListsss
+                      //           .map((plan) => buildPlanDetails(plan))
+                      //           .toList(),
+                      //     ],
+                      //   )
+                      // ],
                     ],
                   ),
                 ),

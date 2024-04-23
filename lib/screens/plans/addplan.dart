@@ -8,9 +8,9 @@ import 'package:my_trips/screens/loginscreens/support.dart';
 import 'package:intl/intl.dart';
 
 class addPlanScreen extends StatefulWidget {
-  const addPlanScreen({required this.planss, required this.id, super.key});
   final TripModel planss;
   final id;
+  const addPlanScreen({required this.planss, required this.id, super.key});
 
   @override
   State<addPlanScreen> createState() => _addPlanScreenState();
@@ -112,46 +112,6 @@ class _addPlanScreenState extends State<addPlanScreen> {
                     return null;
                   },
                 ),
-                // TripFormFields(
-                //   controller: activitytypeController,
-                //   hintText: "Select your Activity",
-                //   validator: (value) {
-                //     if (value == null || value.isEmpty) {
-                //       return "Activity Type is required";
-                //     }
-                //     return null;
-                //   },
-                //   prefixIcon: Padding(
-                //     padding: const EdgeInsets.all(15.0),
-                //     child: DropdownButton(
-                //       dropdownColor: const Color.fromARGB(255, 93, 35, 104),
-                //       hint: Text(
-                //         "Select activity type:",
-                //         style: TextStyle(
-                //             color: const Color.fromARGB(255, 134, 133, 133)),
-                //       ),
-                //       icon: Icon(Icons.arrow_drop_down),
-                //       iconSize: 30,
-                //       isExpanded: true,
-                //       value: valueChoose,
-                //       onChanged: (newValue) {
-                //         setState(() {
-                //           valueChoose = newValue;
-                //           activitytypeController.text = newValue ?? '';
-                //         });
-                //       },
-                //       items: listitems.map((valueItem) {
-                //         return DropdownMenuItem(
-                //           value: valueItem,
-                //           child: Text(
-                //             valueItem,
-                //             style: TextStyle(color: Colors.white),
-                //           ),
-                //         );
-                //       }).toList(),
-                //     ),
-                //   ),
-                // ),
                 SizedBox(height: 10),
                 Row(
                   children: [
@@ -213,9 +173,6 @@ class _addPlanScreenState extends State<addPlanScreen> {
     print(" save activity function called ");
     final activitytypeee = activitytypeController.text.trim();
     final titletitle = titleController.text.trim();
-    // final timetime = DateTime.parse(timeController.text.trim());
-    // TimeOfDay selectedTime =
-    //     TimeOfDay.fromDateTime(DateTime.parse(timeController.text.trim()));
     String timetime = _time!.format(context);
     TripModel addplantrip = TripModel(
       id: widget.planss.id,
@@ -229,7 +186,7 @@ class _addPlanScreenState extends State<addPlanScreen> {
       title: titletitle,
       time: timetime,
     );
-    await editTrip(addplantrip);
+    editTrip(addplantrip);
     //await addPlans(addplantrip);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

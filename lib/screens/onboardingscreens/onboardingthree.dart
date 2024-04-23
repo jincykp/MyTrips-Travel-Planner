@@ -39,7 +39,7 @@ class OnBoardingThree extends StatelessWidget {
               child: TextButton(
                   onPressed: () {
                     Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => BottomNav()));
+                        MaterialPageRoute(builder: (context) => LoggIn()));
                   },
                   child: Text(
                     'Next>>>',
