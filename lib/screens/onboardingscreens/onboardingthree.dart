@@ -20,11 +20,11 @@ class OnBoardingThree extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "'''Get Set to Jet! Start Planning Your Journey'''",
+                      "Get Set to Jet! Start Planning Your Journey",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 30,
+                        fontSize: 20,
                       ),
                     ),
                   )

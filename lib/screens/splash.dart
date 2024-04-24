@@ -28,29 +28,24 @@ class _ScreenSplashState extends State<ScreenSplash> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 6, 6, 37),
-      body: SafeArea(
+      body: Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 25),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "MY TRIPS",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 35,
-                    ),
-                  ),
-                ],
+              Text(
+                "MY TRIPS",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 35,
+                ),
               ),
               SizedBox(height: 50),
               Center(
                 child: Container(
-                  child: Lottie.asset("assets/animations/location.json"),
+                  child: Lottie.asset(
+                      "assets/animations/Animation - 1713874576773.json"),
                 ),
               )
             ],
@@ -67,7 +62,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
   }
 
   Future<void> gotoLogin() async {
-    await Future.delayed(Duration(seconds: 4));
+    await Future.delayed(Duration(seconds: 7));
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (contex) => OnBoardingTwo()));
   }

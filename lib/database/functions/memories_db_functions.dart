@@ -9,7 +9,6 @@ Future<void> addMemories(MemoryModel mm) async {
   memoryDataBox.put(mm.id, mm);
   memoryNotifier.value.add(mm);
   memoryNotifier.notifyListeners();
-
   print("mm added");
 }
 

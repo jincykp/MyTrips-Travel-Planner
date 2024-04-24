@@ -7,9 +7,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:my_trips/screens/loginscreens/support.dart';
 
 class EditScreen extends StatefulWidget {
-  const EditScreen({required this.tripss, required this.id, super.key});
   final TripModel tripss;
   final int id;
+  const EditScreen({required this.tripss, required this.id, super.key});
 
   @override
   State<EditScreen> createState() => _EditScreenState();

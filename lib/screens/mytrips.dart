@@ -17,9 +17,7 @@ class _TripScreenState extends State<TripScreen> {
   //late TripModel triplist;
   late List<TripModel> tripslist = [];
   late List<TripModel> planList = [];
-
   String reg = '';
-
   final TextEditingController _searchcontroller = TextEditingController();
 
   @override

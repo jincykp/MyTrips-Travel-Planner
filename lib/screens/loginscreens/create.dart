@@ -187,7 +187,7 @@ class _CreateScreenState extends State<CreateScreen> {
           password: userpassword,
           name: username,
           homecity: userhomecity);
-      Navigator.push(
+      Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => BottomNav()));
       addUserProfile(user);
     }

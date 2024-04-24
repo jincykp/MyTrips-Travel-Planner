@@ -245,36 +245,39 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                       SizedBox(
                         height: 20,
                       ),
-
-                      ElevatedButton(
-                        onPressed: () async {
-                          TripModel? addedPlan = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => addPlanScreen(
-                                      planss: tripListss, id: tripListss.id)));
-                          if (addedPlan != null) {
-                            setState(() {
-                              showPlanSection = true;
-                              tripListss = addedPlan.actvityType;
-                              tripListss = addedPlan.title;
-                              tripListss = addedPlan.time;
-                            });
-                            print('Added plan=$addedPlan');
-                          }
-                        },
-                        child: Text(
-                          "Add Plan",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll(Colors.purple),
+                      Visibility(
+                        visible: !showPlanSection,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            TripModel? addedPlan = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => addPlanScreen(
+                                        planss: tripListss,
+                                        id: tripListss.id)));
+                            if (addedPlan != null) {
+                              setState(() {
+                                showPlanSection = true;
+                                tripListss = addedPlan.actvityType;
+                                tripListss = addedPlan.title;
+                                tripListss = addedPlan.time;
+                              });
+                              print('Added plan=$addedPlan');
+                            }
+                          },
+                          child: Text(
+                            "Add Plan",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStatePropertyAll(Colors.purple),
+                          ),
                         ),
                       ),
-
                       Visibility(
-                        visible: widget.trips.actvityType != null,
+                        visible: widget.trips.actvityType!=null,
+                        // visible: showPlanSection,
                         child: Column(
                           children: [
                             Row(
@@ -292,19 +295,28 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                                 )
                               ],
                             ),
+                            SizedBox(
+                              height: 15,
+                            ),
                             Text(
-                              'Activity type:${widget.trips.actvityType}',
+                              'Activity type: ${widget.trips.actvityType}',
                               style: TextStyle(color: Colors.white),
                             ),
-                            Text('Activity type:${widget.trips.title}',
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text('Activity type: ${widget.trips.title}',
                                 style: TextStyle(color: Colors.white)),
+                            SizedBox(
+                              height: 15,
+                            ),
                             Text(
-                              'Activity type:${widget.trips.time}',
+                              'Activity type: ${widget.trips.time}',
                               style: TextStyle(color: Colors.white),
                             )
                           ],
                         ),
-                      )
+                      ),
                       // if (showPlanSection) ...[
                       //   Row(
                       //     mainAxisAlignment: MainAxisAlignment.center,

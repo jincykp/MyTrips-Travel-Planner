@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_trips/database/functions/memories_db_functions.dart';
 import 'package:my_trips/database/model/memories_model.dart';
 import 'package:my_trips/screens/memories.dart';
+import 'package:my_trips/screens/memories/one_memory.dart';
 
 class MemoryFullview extends StatefulWidget {
   final MemoryModel fullview;
@@ -39,7 +40,7 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
-                    color: Color.fromARGB(255, 156, 156, 192),
+                    //color: Color.fromARGB(255, 156, 156, 192),
                     // elevation: 50,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12)),
@@ -60,7 +61,7 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                                   child: Text(
                                     "Trip Name:",
                                     style: TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.black,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
@@ -70,7 +71,7 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                                 Text(
                                   memoryListss.MemoryTripName,
                                   style: TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.black,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 SizedBox(
@@ -86,7 +87,7 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                                 Text(
                                   "Trip Date:",
                                   style: TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.black,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 SizedBox(
@@ -95,7 +96,7 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                                 Text(
                                   memoryListss.MemoryDate,
                                   style: TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.black,
                                       fontWeight: FontWeight.bold),
                                 )
                               ],
@@ -108,7 +109,7 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                                 Text(
                                   "Trip Experience:",
                                   style: TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.black,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 SizedBox(
@@ -118,34 +119,71 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                                   child: Text(
                                     memoryListss.MemoryExperience,
                                     style: TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.black,
                                         fontWeight: FontWeight.bold),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 3,
                                   ),
-                                )
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(Icons.edit),
+                                ),
                               ],
                             ),
                             SizedBox(height: 20),
+                            // Expanded(
+                            //   child: Container(
+                            //     child: GridView.builder(
+                            //         gridDelegate:
+                            //             SliverGridDelegateWithFixedCrossAxisCount(
+                            //                 crossAxisCount: 1),
+                            //         itemCount: memoryListss.MemoryImage.length,
+                            //         itemBuilder: (context, index) {
+                            //           print(memoryListss.MemoryImage[index]);
+                            //           return Padding(
+                            //             padding: const EdgeInsets.all(5.0),
+                            //             child: Image.file(
+                            //               File(memoryListss.MemoryImage[index]),
+                            //               fit: BoxFit.cover,
+                            //             ),
+                            //           );
+                            //         }),
+                            //   ),
+                            // ),
                             Expanded(
-                              child: Container(
-                                child: GridView.builder(
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 1),
-                                    itemCount: memoryListss.MemoryImage.length,
-                                    itemBuilder: (context, index) {
-                                      print(memoryListss.MemoryImage[index]);
-                                      return Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Image.file(
-                                          File(memoryListss.MemoryImage[index]),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      );
-                                    }),
-                              ),
-                            ),
+                                child: ValueListenableBuilder(
+                                    valueListenable: memoryNotifier,
+                                    builder: (context, value, child) =>
+                                        GridView.builder(
+                                            gridDelegate:
+                                                SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount: 3,
+                                                    mainAxisSpacing: 5,
+                                                    crossAxisSpacing: 5),
+                                            itemCount: value.length,
+                                            itemBuilder: (context, index) {
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              DetailView(
+                                                                  imagePath: memoryListss
+                                                                          .MemoryImage[
+                                                                      index])));
+                                                },
+                                                child: Image.file(
+                                                  File(memoryListss
+                                                      .MemoryImage[index]),
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              );
+                                            })))
                           ],
                         ),
                       ),

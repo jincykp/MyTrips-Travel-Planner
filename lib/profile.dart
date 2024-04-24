@@ -7,6 +7,7 @@ import 'package:my_trips/database/model/data_model.dart';
 import 'package:my_trips/screens/settings_screens/about_us.dart';
 import 'package:my_trips/screens/settings_screens/contact_us.dart';
 import 'package:my_trips/screens/settings_screens/privacy_policy.dart';
+import 'package:my_trips/screens/settings_screens/terms_conditions.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -35,7 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 145, 145, 190),
+      //backgroundColor: Color.fromARGB(255, 145, 145, 190),
       appBar: AppBar(
         foregroundColor: Colors.white,
         title: Text(
@@ -89,7 +90,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => ContactScreen()));
-                })
+                }),
+            ListTile(
+                leading: Icon(Icons.note),
+                title: Text(
+                  "Terms and Conditions",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TermsconditionScreen()));
+                }),
           ]),
         ),
       ),
@@ -112,7 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 image == null
                     ? CircleAvatar(
                         backgroundColor: Color.fromARGB(255, 106, 106, 173),
-                        radius: 60,
+                        radius: 80,
                         child: IconButton(
                           onPressed: () {
                             getimage();
@@ -125,7 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       )
                     : CircleAvatar(
-                        radius: 50,
+                        radius: 70,
                         backgroundImage: FileImage(
                           (File(image!)),
                         ),
@@ -156,27 +169,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   style: TextStyle(color: Colors.white)),
                             ),
                             Divider(thickness: 2),
-                            // Padding(
-                            //   padding: const EdgeInsets.all(8.0),
-                            //   child: Row(
-                            //     children: [
-                            //       Text(
-                            //         "Settings",
-                            //         style: TextStyle(
-                            //             color: Colors.white,
-                            //             fontWeight: FontWeight.bold),
-                            //       ),
-                            //       IconButton(
-                            //           onPressed: () {},
-                            //           icon: Icon(
-                            //             Icons.settings,
-                            //             color: const Color.fromARGB(
-                            //                 255, 122, 112, 112),
-                            //           )),
-                            //     ],
-                            //   ),
-                            // ),
-                            // Divider(thickness: 2),
                           ],
                         );
                       } else {

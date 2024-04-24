@@ -51,6 +51,8 @@ class _PastTripScreenState extends State<PastTripScreen> {
                           child: Card(
                             color: Color.fromARGB(255, 119, 71, 113),
                             child: ListTile(
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 6, horizontal: 10),
                               onTap: () {
                                 Navigator.push(
                                     context,

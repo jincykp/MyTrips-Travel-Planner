@@ -20,11 +20,11 @@ class OnBoardingTwo extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10.0, 150, 10.0, 16.0),
                     child: Text(
-                      "'''The World Awaits! Let's Plan Your Next Escape'''",
+                      "The World Awaits! Let's Plan Your Next Escape",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 28,
+                        fontSize: 20,
                       ),
                     ),
                   ),
