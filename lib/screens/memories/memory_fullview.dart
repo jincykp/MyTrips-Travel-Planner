@@ -1,8 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:my_trips/database/functions/memories_db_functions.dart';
 import 'package:my_trips/database/model/memories_model.dart';
-import 'package:my_trips/screens/memories.dart';
+import 'package:my_trips/screens/memories/edit_memories.dart';
 import 'package:my_trips/screens/memories/one_memory.dart';
 
 class MemoryFullview extends StatefulWidget {
@@ -16,7 +15,7 @@ class MemoryFullview extends StatefulWidget {
 }
 
 class _MemoryFullviewState extends State<MemoryFullview> {
-  var memoryListss;
+  late MemoryModel memoryListss;
   @override
   void initState() {
     // TODO: implement initState
@@ -56,134 +55,113 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                             ),
                             Row(
                               children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    "Trip Name:",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: RichText(
+                                    text: TextSpan(
+                                        text: 'Trip Name:   ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 20),
+                                        children: [
+                                          TextSpan(
+                                            text: memoryListss.MemoryTripName!,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                                fontSize: 20),
+                                          ),
+                                        ]),
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  memoryListss.MemoryTripName,
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(
-                                  width: 150,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  "Trip Date:",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  memoryListss.MemoryDate,
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  "Trip Experience:",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    memoryListss.MemoryExperience,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 3,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
+                                SizedBox(width: 40),
                                 IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.edit),
-                                ),
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => EditMemory(
+                                                  mEdit: memoryListss,
+                                                  id: memoryListss.id!)));
+                                    },
+                                    icon: Icon(Icons.edit))
                               ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: RichText(
+                                text: TextSpan(
+                                    text: 'Trip Date:   ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: 20),
+                                    children: [
+                                      TextSpan(
+                                        text: memoryListss.MemoryDate!,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 20),
+                                      )
+                                    ]),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: RichText(
+                                text: TextSpan(
+                                    text: 'Trip Experience:   ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: 20),
+                                    children: [
+                                      TextSpan(
+                                        text: memoryListss.MemoryExperience!,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 20),
+                                      )
+                                    ]),
+                              ),
                             ),
                             SizedBox(height: 20),
-                            // Expanded(
-                            //   child: Container(
-                            //     child: GridView.builder(
-                            //         gridDelegate:
-                            //             SliverGridDelegateWithFixedCrossAxisCount(
-                            //                 crossAxisCount: 1),
-                            //         itemCount: memoryListss.MemoryImage.length,
-                            //         itemBuilder: (context, index) {
-                            //           print(memoryListss.MemoryImage[index]);
-                            //           return Padding(
-                            //             padding: const EdgeInsets.all(5.0),
-                            //             child: Image.file(
-                            //               File(memoryListss.MemoryImage[index]),
-                            //               fit: BoxFit.cover,
-                            //             ),
-                            //           );
-                            //         }),
-                            //   ),
-                            // ),
                             Expanded(
-                                child: ValueListenableBuilder(
-                                    valueListenable: memoryNotifier,
-                                    builder: (context, value, child) =>
-                                        GridView.builder(
-                                            gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                                    crossAxisCount: 3,
-                                                    mainAxisSpacing: 5,
-                                                    crossAxisSpacing: 5),
-                                            itemCount: value.length,
-                                            itemBuilder: (context, index) {
-                                              return GestureDetector(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              DetailView(
-                                                                  imagePath: memoryListss
-                                                                          .MemoryImage[
-                                                                      index])));
-                                                },
-                                                child: Image.file(
-                                                  File(memoryListss
-                                                      .MemoryImage[index]),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              );
-                                            })))
+                                child: GridView.builder(
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 3,
+                                            mainAxisSpacing: 5,
+                                            crossAxisSpacing: 5),
+                                    itemCount: memoryListss.MemoryImage?.length,
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      DetailView(
+                                                          imagePath: memoryListss
+                                                                  .MemoryImage![
+                                                              index])));
+                                        },
+                                        child: Image.file(
+                                          File(
+                                              memoryListss.MemoryImage![index]),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      );
+                                    }))
                           ],
                         ),
                       ),

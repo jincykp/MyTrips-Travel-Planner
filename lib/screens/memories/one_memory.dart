@@ -21,9 +21,16 @@ class _DetailViewState extends State<DetailView> {
         ),
       ),
       body: Center(
-        child: Image.file(
-          File(widget.imagePath),
-          fit: BoxFit.cover,
+        child: Container(
+          width: 350,
+          height: 500,
+          child: InteractiveViewer(
+            maxScale: 15,
+            child: Image.file(
+              File(widget.imagePath),
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
       ),
     );

@@ -18,13 +18,11 @@ class _MemoryScreenState extends State<MemoryScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    // // TODO: implement initState
     super.initState();
-    memoryNotifier.addListener(() {
-      setState(() {
-        memoryList = memoryNotifier.value;
-      });
-    });
+    // memoryNotifier.addListener(() {
+    //   memoryList = memoryNotifier.value;
+    // });
     updateMemories();
   }
 

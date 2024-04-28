@@ -13,10 +13,14 @@ Future<void> addMemories(MemoryModel mm) async {
 }
 
 Future<void> updateMemories() async {
-  final memoryDataBox = await Hive.openBox<MemoryModel>('memo_data');
-  memoryNotifier.value.clear();
-  memoryNotifier.value.addAll(memoryDataBox.values);
-  memoryNotifier.notifyListeners();
+  try {
+    final memoryDataBox = await Hive.openBox<MemoryModel>('memo_data');
+    memoryNotifier.value.clear();
+    memoryNotifier.value.addAll(memoryDataBox.values);
+    memoryNotifier.notifyListeners();
+  } on Exception catch (e) {
+    print(e);
+  }
 }
 
 Future<void> deleteMemory(int id) async {
@@ -24,4 +28,16 @@ Future<void> deleteMemory(int id) async {
   memoryDatabox.delete(id);
   // memoryDatabox.clear();
   //updateMemories();
+}
+
+Future<void> editMemories(MemoryModel editedmemos) async {
+  try {
+    print(editedmemos.id);
+    print("m edit reached");
+    final memoryDatabox = await Hive.openBox<MemoryModel>('memo_data');
+    await memoryDatabox.put(editedmemos.id, editedmemos);
+    await updateMemories();
+  } catch (e) {
+    print(e);
+  }
 }

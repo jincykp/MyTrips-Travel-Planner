@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:my_trips/SCREENS/onboardingscreens/onboardingone.dart';
+import 'package:my_trips/screens/homepage.dart';
 import 'package:my_trips/screens/onboardingscreens/onboardingtwo.dart';
 
 class ScreenSplash extends StatefulWidget {
@@ -62,8 +63,8 @@ class _ScreenSplashState extends State<ScreenSplash> {
   }
 
   Future<void> gotoLogin() async {
-    await Future.delayed(Duration(seconds: 7));
+    await Future.delayed(Duration(seconds: 3));
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (contex) => OnBoardingTwo()));
+        context, MaterialPageRoute(builder: (contex) => BottomNav()));
   }
 }

@@ -128,7 +128,6 @@ class _EditScreenState extends State<EditScreen> {
                       if (value == null || value.isEmpty) {
                         return 'Change the start date';
                       }
-
                       return null;
                     },
                     prefixIcon: IconButton(

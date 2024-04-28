@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_trips/profile.dart';
-import 'package:my_trips/screens/memories.dart';
+import 'package:my_trips/screens/memories/memories.dart';
 import 'package:my_trips/screens/mytrips.dart';
 import 'package:my_trips/screens/pasttrips.dart';
+import 'package:my_trips/screens/settings_screens/profile.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});

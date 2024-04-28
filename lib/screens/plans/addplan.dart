@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_trips/database/functions/trip_db_functions.dart';
 import 'package:my_trips/database/model/trip_model.dart';
-import 'package:my_trips/screens/fullview.dart';
+import 'package:my_trips/screens/fullview_trips.dart';
 import 'package:my_trips/screens/loginscreens/support.dart';
 import 'package:intl/intl.dart';
 

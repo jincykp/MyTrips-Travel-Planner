@@ -4,7 +4,7 @@ import 'package:my_trips/database/functions/trip_db_functions.dart';
 import 'package:my_trips/database/model/trip_model.dart';
 import 'package:my_trips/screens/addtrips.dart';
 import 'package:my_trips/screens/edittrips.dart';
-import 'package:my_trips/screens/fullview.dart';
+import 'package:my_trips/screens/fullview_trips.dart';
 
 class TripScreen extends StatefulWidget {
   const TripScreen({super.key});
