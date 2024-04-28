@@ -33,58 +33,60 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
   }
 
   Widget buildPlanDetails(TripModel plan) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: 10),
-        Row(
-          children: [
-            SizedBox(
-              width: 130,
-              child: Text(
-                "Activity Type:",
-                style: TextStyle(color: Colors.white),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 10),
+          Row(
+            children: [
+              SizedBox(
+                width: 130,
+                child: Text(
+                  "Activity Type:",
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
-            ),
-            Text(
-              plan.actvityType ?? '',
-              style: TextStyle(color: Colors.white),
-            )
-          ],
-        ),
-        Row(
-          children: [
-            SizedBox(
-              width: 130,
-              child: Text(
-                "Title:",
+              Text(
+                plan.actvityType ?? '',
                 style: TextStyle(color: Colors.white),
+              )
+            ],
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 130,
+                child: Text(
+                  "Title:",
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
-            ),
-            Text(
-              plan.title ?? '',
-              style: TextStyle(color: Colors.white),
-            )
-          ],
-        ),
-        Row(
-          children: [
-            SizedBox(
-              width: 130,
-              child: Text(
-                "Time:",
+              Text(
+                plan.title ?? '',
                 style: TextStyle(color: Colors.white),
+              )
+            ],
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 130,
+                child: Text(
+                  "Time:",
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
-            ),
-            Text(
-              plan.time ?? '',
-              style: TextStyle(color: Colors.white),
-            )
-          ],
-        ),
-        SizedBox(height: 10),
-        Divider(color: Colors.white),
-      ],
+              Text(
+                plan.time ?? '',
+                style: TextStyle(color: Colors.white),
+              )
+            ],
+          ),
+          SizedBox(height: 10),
+          Divider(color: Colors.white),
+        ],
+      ),
     );
   }
 
