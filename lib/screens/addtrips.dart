@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:my_trips/database/functions/trip_db_functions.dart';
@@ -179,7 +180,6 @@ class _AddTripScreenState extends State<AddTripScreen> {
                     if (value == null || value.isEmpty) {
                       return 'Description is required';
                     }
-
                     return null;
                   },
                 ),

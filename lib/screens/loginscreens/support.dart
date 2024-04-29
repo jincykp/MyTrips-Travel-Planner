@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void successMessage(
     {required BuildContext context, required String successMessage}) {
@@ -45,14 +46,15 @@ class TripFormFields extends StatelessWidget {
   String? hintText;
   String? Function(String?)? validator;
   Widget? prefixIcon;
+  final List<TextInputFormatter>? inputFormatters;
 
-  TripFormFields({
-    super.key,
-    required this.controller,
-    required this.hintText,
-    required this.validator,
-    this.prefixIcon,
-  });
+  TripFormFields(
+      {super.key,
+      required this.controller,
+      required this.hintText,
+      required this.validator,
+      this.prefixIcon,
+      this.inputFormatters});
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +68,7 @@ class TripFormFields extends StatelessWidget {
         prefixIcon: prefixIcon,
       ),
       validator: validator,
+      inputFormatters: inputFormatters,
     );
   }
 }

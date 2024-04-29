@@ -7,7 +7,6 @@ import 'package:my_trips/screens/plans/addplan.dart';
 
 class ViewTripDetails extends StatefulWidget {
   final TripModel trips;
-
   final List<TripModel>? planList;
 
   ViewTripDetails({super.key, required this.trips, required this.planList});
@@ -17,12 +16,18 @@ class ViewTripDetails extends StatefulWidget {
 }
 
 class _ViewTripDetailsState extends State<ViewTripDetails> {
+  final TextStyle _whiteTextStyle =
+      TextStyle(color: Colors.white, fontWeight: FontWeight.bold);
+  final TextStyle _descriptionTextStyle = TextStyle(
+      color: const Color.fromARGB(255, 233, 224, 224),
+      fontWeight: FontWeight.bold);
+
   var tripListss;
   bool showPlanSection = false;
   List<TripModel> planListsss = [];
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     tripListss = widget.trips;
     planListsss = widget.planList ?? [];
@@ -44,12 +49,12 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                 width: 130,
                 child: Text(
                   "Activity Type:",
-                  style: TextStyle(color: Colors.white),
+                  style: _whiteTextStyle,
                 ),
               ),
               Text(
                 plan.actvityType ?? '',
-                style: TextStyle(color: Colors.white),
+                style: _whiteTextStyle,
               )
             ],
           ),
@@ -59,12 +64,12 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                 width: 130,
                 child: Text(
                   "Title:",
-                  style: TextStyle(color: Colors.white),
+                  style: _whiteTextStyle,
                 ),
               ),
               Text(
                 plan.title ?? '',
-                style: TextStyle(color: Colors.white),
+                style: _whiteTextStyle,
               )
             ],
           ),
@@ -74,12 +79,12 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                 width: 130,
                 child: Text(
                   "Time:",
-                  style: TextStyle(color: Colors.white),
+                  style: _whiteTextStyle,
                 ),
               ),
               Text(
                 plan.time ?? '',
-                style: TextStyle(color: Colors.white),
+                style: _whiteTextStyle,
               )
             ],
           ),
@@ -138,18 +143,14 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                             SizedBox(
                               width: 130,
                               child: Text(
-                                "Detination :",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
+                                "Destination :",
+                                style: _whiteTextStyle,
                               ),
                             ),
                             Flexible(
                               child: Text(
                                 tripListss.destination,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
+                                style: _whiteTextStyle,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
                               ),
@@ -161,17 +162,16 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                           children: [
                             SizedBox(
                               width: 130,
-                              child: Text("Start Date :",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold)),
+                              child: Text(
+                                "Start Date :",
+                                style: _whiteTextStyle,
+                              ),
                             ),
                             Text(
-                                DateFormat('dd-MM-yyyy')
-                                    .format(tripListss.startdate),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold)),
+                              DateFormat('dd-MM-yyyy')
+                                  .format(tripListss.startdate),
+                              style: _whiteTextStyle,
+                            ),
                           ],
                         ),
                         SizedBox(height: 15),
@@ -180,18 +180,15 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                             SizedBox(
                               width: 130,
                               child: Text(
-                                "End Date   :",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
+                                "End Date :",
+                                style: _whiteTextStyle,
                               ),
                             ),
                             Text(
-                                DateFormat('dd-MM-yyyy')
-                                    .format(tripListss.enddate),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold)),
+                              DateFormat('dd-MM-yyyy')
+                                  .format(tripListss.enddate),
+                              style: _whiteTextStyle,
+                            ),
                           ],
                         ),
                         SizedBox(height: 15),
@@ -201,18 +198,13 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                               width: 130,
                               child: Text(
                                 "Trip Name:",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
+                                style: _whiteTextStyle,
                               ),
                             ),
                             Flexible(
                               child: Text(
                                 tripListss.tripname,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    overflow: TextOverflow.ellipsis,
-                                    fontWeight: FontWeight.bold),
+                                style: _whiteTextStyle,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
                               ),
@@ -226,18 +218,13 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                               width: 130,
                               child: Text(
                                 "Description:",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
+                                style: _whiteTextStyle,
                               ),
                             ),
                             Flexible(
                               child: Text(
                                 tripListss.description,
-                                style: TextStyle(
-                                    color: const Color.fromARGB(
-                                        255, 233, 224, 224),
-                                    fontWeight: FontWeight.bold),
+                                style: _descriptionTextStyle,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
                               ),
@@ -249,7 +236,6 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                         ),
                         Visibility(
                           visible: planListsss.isEmpty,
-                          //visible: !showPlanSection,
                           child: ElevatedButton(
                             onPressed: () async {
                               TripModel? addedPlan = await Navigator.push(
@@ -279,9 +265,6 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                           ),
                         ),
                         Visibility(
-                          //visible: planListsss.isEmpty,
-                          //visible: widget.trips.actvityType != null,
-                          // visible: showPlanSection,
                           child: Column(
                             children: [
                               SizedBox(
@@ -299,50 +282,23 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                               ),
                               Text(
                                 'Activity type: ${widget.trips.actvityType}',
-                                style: TextStyle(color: Colors.white),
+                                style: _whiteTextStyle,
                               ),
                               SizedBox(
                                 height: 15,
                               ),
                               Text('Activity type: ${widget.trips.title}',
-                                  style: TextStyle(color: Colors.white)),
+                                  style: _whiteTextStyle),
                               SizedBox(
                                 height: 15,
                               ),
                               Text(
                                 'Activity type: ${widget.trips.time}',
-                                style: TextStyle(color: Colors.white),
+                                style: _whiteTextStyle,
                               )
                             ],
                           ),
                         ),
-                        // if (showPlanSection) ...[
-                        //   Row(
-                        //     mainAxisAlignment: MainAxisAlignment.center,
-                        //     children: [
-                        //       SizedBox(
-                        //         width: 100,
-                        //         child: Text(
-                        //           "Plans",
-                        //           style: TextStyle(
-                        //               color: Colors.white,
-                        //               fontSize: 20,
-                        //               fontWeight: FontWeight.bold),
-                        //         ),
-                        //       )
-                        //     ],
-                        //   ),
-                        //   SizedBox(
-                        //     height: 10,
-                        //   ),
-                        //   Column(
-                        //     children: [
-                        //       ...planListsss
-                        //           .map((plan) => buildPlanDetails(plan))
-                        //           .toList(),
-                        //     ],
-                        //   )
-                        // ],
                       ],
                     ),
                   ),

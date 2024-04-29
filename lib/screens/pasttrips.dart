@@ -90,16 +90,6 @@ class _PastTripScreenState extends State<PastTripScreen> {
                                 style: TextStyle(color: Colors.white),
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              // trailing: IconButton(
-                              //   onPressed: () {
-                              //     deleteAlertDialog(
-                              //         context, tripList[index].id!);
-                              //   },
-                              //   icon: Icon(
-                              //     Icons.delete,
-                              //     color: Colors.red,
-                              //   ),
-                              // ),
                             ),
                           ),
                         ),
