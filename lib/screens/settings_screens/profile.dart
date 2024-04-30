@@ -10,7 +10,8 @@ import 'package:my_trips/screens/settings_screens/privacy_policy.dart';
 import 'package:my_trips/screens/settings_screens/terms_conditions.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen({Key? key}) : super(key: key);
+
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -18,9 +19,9 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   late UserModel userModel;
   String? image;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getAllUSerProfile();
     getUserImage().then((images) {
@@ -36,19 +37,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Color.fromARGB(255, 145, 145, 190),
       appBar: AppBar(
         foregroundColor: Colors.white,
-        title: Text(
-          "PROFILE",
-        ),
+        title: Text("PROFILE"),
         backgroundColor: Color.fromARGB(255, 6, 6, 37),
       ),
-      drawer: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 15, 15, 15),
-        child: Drawer(
-          backgroundColor: Color.fromARGB(255, 145, 145, 190),
-          child: ListView(children: [
+      drawer: Drawer(
+        backgroundColor: Color.fromARGB(255, 145, 145, 190),
+        child: ListView(
+          children: [
             ListTile(
               leading: Icon(
                 Icons.settings,
@@ -60,50 +57,60 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             ListTile(
-                leading: Icon(Icons.privacy_tip),
-                title: Text(
-                  "Privacy Policy",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PrivacyPolicyScreen()));
-                }),
+              leading: Icon(Icons.privacy_tip),
+              title: Text(
+                "Privacy Policy",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PrivacyPolicyScreen()),
+                );
+              },
+            ),
             ListTile(
-                leading: Icon(Icons.info),
-                title: Text(
-                  "About Us",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AboutScreen()));
-                }),
+              leading: Icon(Icons.info),
+              title: Text(
+                "About Us",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AboutScreen()),
+                );
+              },
+            ),
             ListTile(
-                leading: Icon(Icons.contact_support_sharp),
-                title: Text(
-                  "Contact Us",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ContactScreen()));
-                }),
+              leading: Icon(Icons.contact_support_sharp),
+              title: Text(
+                "Contact Us",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ContactScreen()),
+                );
+              },
+            ),
             ListTile(
-                leading: Icon(Icons.note),
-                title: Text(
-                  "Terms and Conditions",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => TermsconditionScreen()));
-                }),
-          ]),
+              leading: Icon(Icons.note),
+              title: Text(
+                "Terms and Conditions",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => TermsconditionScreen()),
+                );
+              },
+            ),
+          ],
         ),
       ),
       body: Center(
@@ -119,73 +126,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(
-                  height: 10,
-                ),
-                image == null
-                    ? CircleAvatar(
-                        backgroundColor: Color.fromARGB(255, 106, 106, 173),
-                        radius: 80,
-                        child: IconButton(
-                          onPressed: () {
-                            getimage();
-                          },
-                          icon: Icon(
-                            Icons.person,
-                            color: Colors.purple,
-                            size: 80,
-                          ),
-                        ),
-                      )
-                    : CircleAvatar(
-                        radius: 70,
-                        backgroundImage: FileImage(
-                          (File(image!)),
-                        ),
-                      ),
+                SizedBox(height: 10),
+                buildAvatar(),
                 SizedBox(height: 10),
                 Expanded(
-                  child: ValueListenableBuilder<List<UserModel>>(
-                    valueListenable: userListNotifier,
-                    builder: (context, userList, _) {
-                      if (userList.isNotEmpty) {
-                        final user = userList.last;
-                        return Column(
-                          children: [
-                            ListTile(
-                              title: Text('Name: ${user.name}',
-                                  style: TextStyle(color: Colors.white)),
-                            ),
-                            Divider(thickness: 2),
-                            ListTile(
-                              title: Text(
-                                'Email id: ${user.email}',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            Divider(thickness: 2),
-                            ListTile(
-                              title: Text('Home City: ${user.homecity}',
-                                  style: TextStyle(color: Colors.white)),
-                            ),
-                            Divider(thickness: 2),
-                          ],
-                        );
-                      } else {
-                        return Container();
-                      }
-                    },
-                  ),
+                  child: buildUserDetails(),
                 ),
-                ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.blue),
-                    ),
-                    onPressed: () {
-                      showAlertDialog(context);
-                    },
-                    child:
-                        Text("Sign Out", style: TextStyle(color: Colors.white)))
+                buildSignOutButton(),
               ],
             ),
           ),
@@ -194,7 +141,70 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  getimage() async {
+  Widget buildAvatar() {
+    return image == null
+        ? CircleAvatar(
+            backgroundColor: Color.fromARGB(255, 106, 106, 173),
+            radius: 70,
+            child: IconButton(
+              onPressed: () {
+                getimage();
+              },
+              icon: Icon(
+                Icons.person,
+                color: Colors.purple,
+                size: 80,
+              ),
+            ),
+          )
+        : CircleAvatar(
+            radius: 60,
+            backgroundImage: FileImage(File(image!)),
+          );
+  }
+
+  Widget buildUserDetails() {
+    return ValueListenableBuilder<List<UserModel>>(
+      valueListenable: userListNotifier,
+      builder: (context, userList, _) {
+        if (userList.isNotEmpty) {
+          final user = userList.last;
+          return Column(
+            children: [
+              buildListTile('Name:', user.name),
+              Divider(thickness: 2),
+              buildListTile('Email id:', user.email),
+              Divider(thickness: 2),
+              buildListTile('Home City:', user.homecity),
+              Divider(thickness: 2),
+            ],
+          );
+        } else {
+          return Container();
+        }
+      },
+    );
+  }
+
+  Widget buildListTile(String label, String value) {
+    return ListTile(
+      title: Text(label + ' $value', style: TextStyle(color: Colors.white)),
+    );
+  }
+
+  Widget buildSignOutButton() {
+    return ElevatedButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.blue),
+      ),
+      onPressed: () {
+        showAlertDialog(context);
+      },
+      child: Text("Sign Out", style: TextStyle(color: Colors.white)),
+    );
+  }
+
+  void getimage() async {
     final imagePicker = ImagePicker();
     final pickedImage =
         await imagePicker.pickImage(source: ImageSource.gallery);
@@ -204,17 +214,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
       });
 
       userModel = UserModel(
-          email: userModel.email,
-          password: userModel.password,
-          name: userModel.name,
-          homecity: userModel.homecity,
-          image: pickedImage.path);
+        email: userModel.email,
+        password: userModel.password,
+        name: userModel.name,
+        homecity: userModel.homecity,
+        image: pickedImage.path,
+      );
       await addUserImage(userModel);
     }
   }
 
-  showAlertDialog(BuildContext context) {
-    // set up the buttons
+  void showAlertDialog(BuildContext context) {
     Widget cancelButton = TextButton(
       child: Text("Cancel"),
       onPressed: () {
@@ -225,11 +235,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Text("Sign Out"),
       onPressed: () {
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (ctx1) => SigninScreen()),
-            (route) => false);
+          MaterialPageRoute(builder: (ctx1) => SigninScreen()),
+          (route) => false,
+        );
       },
     );
-    // set up the AlertDialog
+
     AlertDialog alert = AlertDialog(
       backgroundColor: Colors.grey,
       title: Text("Attention!!!"),
@@ -239,7 +250,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         continueButton,
       ],
     );
-    // show the dialog
+
     showDialog(
       context: context,
       builder: (BuildContext context) {

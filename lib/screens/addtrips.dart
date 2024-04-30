@@ -46,7 +46,7 @@ class _AddTripScreenState extends State<AddTripScreen> {
                 images == null
                     ? Container(
                         width: 140,
-                        height: 60,
+                        height: 80,
                         color: Colors.white,
                         child: IconButton(
                           onPressed: () {
@@ -56,8 +56,8 @@ class _AddTripScreenState extends State<AddTripScreen> {
                           iconSize: 55,
                         ))
                     : Container(
-                        width: 100,
-                        height: 70,
+                        width: 140,
+                        height: 90,
                         child: Image.file(
                           File(images!),
                           fit: BoxFit.cover,

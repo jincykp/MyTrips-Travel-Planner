@@ -159,7 +159,10 @@ class _addPlanScreenState extends State<addPlanScreen> {
                           timeController.text = _time!.format(context);
                         });
                       },
-                      icon: Icon(Icons.timer_outlined)),
+                      icon: Icon(
+                        Icons.timer_outlined,
+                        color: Colors.white,
+                      )),
                 ),
               ],
             ),

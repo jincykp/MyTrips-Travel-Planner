@@ -85,7 +85,11 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                                           MaterialPageRoute(
                                               builder: (context) => EditMemory(
                                                   mEdit: memoryListss,
-                                                  id: memoryListss.id!)));
+                                                  id: memoryListss.id!))).then(
+                                          (value) {
+                                        memoryListss = value;
+                                        setState(() {});
+                                      });
                                     },
                                     icon: Icon(Icons.edit))
                               ],

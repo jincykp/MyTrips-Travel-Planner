@@ -64,7 +64,7 @@ class _EditScreenState extends State<EditScreen> {
               children: [
                 imagee == null
                     ? Container(
-                        width: 100,
+                        width: 140,
                         height: 80,
                         color: Colors.white,
                         child: IconButton(
@@ -74,7 +74,7 @@ class _EditScreenState extends State<EditScreen> {
                         ))
                     : Container(
                         height: 80,
-                        width: 100,
+                        width: 140,
                         child: Image.file(
                           File(imagee!),
                           fit: BoxFit.cover,

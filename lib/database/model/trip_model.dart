@@ -18,11 +18,12 @@ class TripModel extends HiveObject {
   @HiveField(6)
   final String? image;
   @HiveField(7)
-  final String? actvityType;
+  String? actvityType;
   @HiveField(8)
-  final String? title;
+  String? title;
   @HiveField(9)
-  final String? time;
+  String? time;
+
   TripModel(
       {this.id,
       required this.destination,

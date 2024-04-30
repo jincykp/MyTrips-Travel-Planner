@@ -22,7 +22,7 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
       color: const Color.fromARGB(255, 233, 224, 224),
       fontWeight: FontWeight.bold);
 
-  var tripListss;
+  late TripModel tripListss;
   bool showPlanSection = false;
   List<TripModel> planListsss = [];
 
@@ -136,7 +136,7 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                                 width: 400,
                                 height: 200,
                                 child: tripListss.image != null
-                                    ? Image.file(File(tripListss.image))
+                                    ? Image.file(File(tripListss.image!))
                                     : Container()),
                         SizedBox(height: 20),
                         Row(
@@ -150,7 +150,7 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                             ),
                             Flexible(
                               child: Text(
-                                tripListss.destination,
+                                tripListss.destination!,
                                 style: _whiteTextStyle,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
@@ -170,7 +170,7 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                             ),
                             Text(
                               DateFormat('dd-MM-yyyy')
-                                  .format(tripListss.startdate),
+                                  .format(tripListss.startdate!),
                               style: _whiteTextStyle,
                             ),
                           ],
@@ -187,7 +187,7 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                             ),
                             Text(
                               DateFormat('dd-MM-yyyy')
-                                  .format(tripListss.enddate),
+                                  .format(tripListss.enddate!),
                               style: _whiteTextStyle,
                             ),
                           ],
@@ -204,7 +204,7 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                             ),
                             Flexible(
                               child: Text(
-                                tripListss.tripname,
+                                tripListss.tripname!,
                                 style: _whiteTextStyle,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
@@ -224,7 +224,7 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                             ),
                             Flexible(
                               child: Text(
-                                tripListss.description,
+                                tripListss.description!,
                                 style: _descriptionTextStyle,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
@@ -237,7 +237,7 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                         ),
                         Visibility(
                           // visible: !showPlanSection,
-                          visible: planListsss.isEmpty,
+                          visible: tripListss.actvityType == null,
                           child: ElevatedButton(
                             onPressed: () async {
                               TripModel? addedPlan = await Navigator.push(
@@ -249,9 +249,10 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                               if (addedPlan != null) {
                                 setState(() {
                                   showPlanSection = true;
-                                  tripListss = addedPlan.actvityType;
-                                  tripListss = addedPlan.title;
-                                  tripListss = addedPlan.time;
+                                  tripListss.actvityType =
+                                      addedPlan.actvityType;
+                                  tripListss.title = addedPlan.title;
+                                  tripListss.time = addedPlan.time;
                                 });
                                 print('Added plan=$addedPlan');
                               }
@@ -267,7 +268,7 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                           ),
                         ),
                         Visibility(
-                          // visible: showPlanSection,
+                          visible: tripListss.actvityType != null,
                           child: Column(
                             children: [
                               SizedBox(
@@ -284,7 +285,7 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                                 height: 15,
                               ),
                               Text(
-                                'Activity type: ${widget.trips.actvityType}',
+                                'Activity type: ${widget.trips.actvityType ?? 'no '}',
                                 style: _whiteTextStyle,
                               ),
                               SizedBox(

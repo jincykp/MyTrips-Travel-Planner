@@ -170,7 +170,7 @@ class _EditMemoryState extends State<EditMemory> {
                             MemoryExperience: memoryExperienceController.text);
                         // saveMemories();
                         editMemories(memoDatas).then((value) {
-                          Navigator.of(context).pop();
+                          Navigator.of(context).pop(memoDatas);
                           // Navigator.of(context).pop();
                         });
                       }
