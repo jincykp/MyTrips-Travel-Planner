@@ -142,25 +142,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildAvatar() {
-    return image == null
-        ? CircleAvatar(
-            backgroundColor: Color.fromARGB(255, 106, 106, 173),
-            radius: 70,
+    return Stack(
+      children: [
+        CircleAvatar(
+          backgroundColor: const Color.fromARGB(255, 106, 106, 173),
+          backgroundImage: image != null
+              ? FileImage(File(image!))
+              : const AssetImage('') as ImageProvider,
+          radius: 79,
+          child: image == null
+              ? IconButton(
+                  onPressed: () {
+                    getimage();
+                  },
+                  icon: Icon(
+                    Icons.person,
+                    size: 80,
+                  ))
+              : null,
+        ),
+        Positioned(
+            bottom: -5,
+            right: -4,
             child: IconButton(
-              onPressed: () {
-                getimage();
-              },
-              icon: Icon(
-                Icons.person,
-                color: Colors.purple,
-                size: 80,
-              ),
-            ),
-          )
-        : CircleAvatar(
-            radius: 60,
-            backgroundImage: FileImage(File(image!)),
-          );
+                onPressed: () {
+                  getimage();
+                },
+                icon: Icon(Icons.add_a_photo_outlined,
+                    color: Colors.white, size: 45)))
+      ],
+    );
+    // return image == null
+    //     ? CircleAvatar(
+    //         backgroundColor: Color.fromARGB(255, 106, 106, 173),
+    //         radius: 70,
+    //         child: IconButton(
+    //           onPressed: () {
+    //             getimage();
+    //           },
+    //           icon: Icon(
+    //             Icons.person,
+    //             color: Colors.purple,
+    //             size: 80,
+    //           ),
+    //         ),
+    //       )
+    //     : CircleAvatar(
+    //         radius: 60,
+    //         backgroundImage: FileImage(File(image!)),
+    //       );
   }
 
   Widget buildUserDetails() {

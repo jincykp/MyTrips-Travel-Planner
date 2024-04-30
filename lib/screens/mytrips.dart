@@ -40,6 +40,7 @@ class _TripScreenState extends State<TripScreen> {
 
   AppBar buildAppBar() {
     return AppBar(
+      automaticallyImplyLeading: false,
       title: Column(
         children: [
           Text("MY TRIPS"),
@@ -245,7 +246,7 @@ class _TripScreenState extends State<TripScreen> {
     AlertDialog alert = AlertDialog(
       backgroundColor: Colors.white,
       title: Text("Cancel This Trip"),
-      content: Text("Do you want to cancel this trip?"),
+      content: Text("Do you want to delete this trip?"),
       actions: [
         cancelButton,
         continueButton,

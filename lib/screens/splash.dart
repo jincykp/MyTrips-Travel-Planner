@@ -63,8 +63,8 @@ class _ScreenSplashState extends State<ScreenSplash> {
   }
 
   Future<void> gotoLogin() async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 7));
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (contex) => BottomNav()));
+        context, MaterialPageRoute(builder: (contex) => OnBoardingTwo()));
   }
 }
