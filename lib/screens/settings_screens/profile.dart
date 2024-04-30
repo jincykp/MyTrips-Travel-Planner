@@ -117,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Card(
           color: Color.fromARGB(255, 6, 6, 37),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.zero),
+            borderRadius: BorderRadius.circular(12),
           ),
           child: Container(
             width: 350,
@@ -169,7 +169,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   getimage();
                 },
                 icon: Icon(Icons.add_a_photo_outlined,
-                    color: Colors.white, size: 45)))
+                    color: Color.fromARGB(255, 233, 231, 231), size: 45)))
       ],
     );
     // return image == null
