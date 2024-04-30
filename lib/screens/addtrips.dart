@@ -213,6 +213,9 @@ class _AddTripScreenState extends State<AddTripScreen> {
   }
 
   saveTrip() async {
+    if (images == null || images!.isEmpty) {
+      return;
+    }
     //  final String tripimage = images;
     print('function called');
     final tripDestination = _destinationController.text.trim();

@@ -27,7 +27,7 @@ Future<void> deleteMemory(int id) async {
   final memoryDatabox = await Hive.openBox<MemoryModel>('memo_data');
   memoryDatabox.delete(id);
   // memoryDatabox.clear();
-  //updateMemories();
+  updateMemories();
 }
 
 Future<void> editMemories(MemoryModel editedmemos) async {

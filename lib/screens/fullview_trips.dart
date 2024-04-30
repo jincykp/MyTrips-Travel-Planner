@@ -110,12 +110,13 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Card(
+              //margin: EdgeInsets.all(10),
               color: Color.fromARGB(255, 6, 6, 37),
               elevation: 50,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               child: Container(
-                width: 400,
+                width: 600,
                 height: 700,
                 child: Padding(
                   padding: const EdgeInsets.all(18.0),
@@ -232,9 +233,10 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                           ],
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
                         Visibility(
+                          // visible: !showPlanSection,
                           visible: planListsss.isEmpty,
                           child: ElevatedButton(
                             onPressed: () async {
@@ -265,6 +267,7 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                           ),
                         ),
                         Visibility(
+                          // visible: showPlanSection,
                           child: Column(
                             children: [
                               SizedBox(
@@ -287,13 +290,13 @@ class _ViewTripDetailsState extends State<ViewTripDetails> {
                               SizedBox(
                                 height: 15,
                               ),
-                              Text('Activity type: ${widget.trips.title}',
+                              Text('Title: ${widget.trips.title}',
                                   style: _whiteTextStyle),
                               SizedBox(
                                 height: 15,
                               ),
                               Text(
-                                'Activity type: ${widget.trips.time}',
+                                'Time: ${widget.trips.time}',
                                 style: _whiteTextStyle,
                               )
                             ],

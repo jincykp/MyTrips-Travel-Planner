@@ -39,12 +39,13 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
+                    //  margin: EdgeInsets.all(8),
                     //color: Color.fromARGB(255, 156, 156, 192),
                     // elevation: 50,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12)),
                     child: Container(
-                      width: 450,
+                      width: 500,
                       // height: 600,
                       child: Padding(
                         padding: const EdgeInsets.all(14.0),
@@ -58,6 +59,7 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                                 Align(
                                   alignment: Alignment.topLeft,
                                   child: RichText(
+                                    // overflow: TextOverflow.ellipsis,
                                     text: TextSpan(
                                         text: 'Trip Name:   ',
                                         style: TextStyle(
@@ -75,7 +77,7 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                                         ]),
                                   ),
                                 ),
-                                SizedBox(width: 40),
+                                SizedBox(width: 20),
                                 IconButton(
                                     onPressed: () {
                                       Navigator.push(

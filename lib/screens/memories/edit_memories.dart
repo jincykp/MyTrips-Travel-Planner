@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:my_trips/database/functions/memories_db_functions.dart';
 import 'package:my_trips/database/model/memories_model.dart';
 import 'package:my_trips/screens/loginscreens/support.dart';
+import 'package:my_trips/screens/memories/memory_fullview.dart';
 
 class EditMemory extends StatefulWidget {
   MemoryModel mEdit;
@@ -170,7 +171,7 @@ class _EditMemoryState extends State<EditMemory> {
                         // saveMemories();
                         editMemories(memoDatas).then((value) {
                           Navigator.of(context).pop();
-                          Navigator.of(context).pop();
+                          // Navigator.of(context).pop();
                         });
                       }
                     },
