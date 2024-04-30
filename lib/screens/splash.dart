@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:my_trips/SCREENS/onboardingscreens/onboardingone.dart';
-import 'package:my_trips/screens/homepage.dart';
 import 'package:my_trips/screens/onboardingscreens/onboardingtwo.dart';
 
 class ScreenSplash extends StatefulWidget {
