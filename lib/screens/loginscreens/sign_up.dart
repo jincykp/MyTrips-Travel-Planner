@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:my_trips/SCREENS/Homepage.dart';
-import 'package:my_trips/SCREENS/LOGINSCREENS/support.dart';
 import 'package:my_trips/database/functions/user_db_functions.dart';
 import 'package:my_trips/database/model/data_model.dart';
+import 'package:my_trips/screens/loginscreens/support.dart';
 
-class SigninScreen extends StatefulWidget {
-  const SigninScreen({super.key});
+class CreateScreen extends StatefulWidget {
+  CreateScreen({super.key});
 
   @override
-  State<SigninScreen> createState() => _SigninScreenState();
+  State<CreateScreen> createState() => _CreateScreenState();
 }
 
-class _SigninScreenState extends State<SigninScreen> {
+class _CreateScreenState extends State<CreateScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _homecityController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  String? message;
+  late Box box1;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +48,6 @@ class _SigninScreenState extends State<SigninScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // App Logo and Title
                           Center(
                             child: Column(
                               children: [
@@ -56,14 +59,14 @@ class _SigninScreenState extends State<SigninScreen> {
                                     borderRadius: BorderRadius.circular(40),
                                   ),
                                   child: Icon(
-                                    Icons.login,
+                                    Icons.person_add,
                                     size: 40,
                                     color: Color(0xFF4ECDC4),
                                   ),
                                 ),
-                                SizedBox(height: 16),
+                                SizedBox(height: 10),
                                 Text(
-                                  "Welcome Back",
+                                  "Join MY TRIPS",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 24,
@@ -72,17 +75,17 @@ class _SigninScreenState extends State<SigninScreen> {
                                 ),
                                 SizedBox(height: 8),
                                 Text(
-                                  "Sign in to continue your journey",
+                                  "Create your account to start planning",
                                   style: TextStyle(
                                     color: Colors.white.withOpacity(0.7),
-                                    fontSize: 14,
+                                    fontSize: 10,
                                   ),
                                 ),
                               ],
                             ),
                           ),
 
-                          SizedBox(height: 60),
+                          SizedBox(height: 20),
 
                           // Email Field
                           Text(
@@ -123,7 +126,7 @@ class _SigninScreenState extends State<SigninScreen> {
                           ),
                           SizedBox(height: 8),
                           TextFormfieldData(
-                            hintText: "Enter your password",
+                            hintText: "Create a password",
                             controller: _passwordController,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -132,19 +135,66 @@ class _SigninScreenState extends State<SigninScreen> {
                               return null;
                             },
                           ),
+                          SizedBox(height: 20),
+
+                          // Name Field
+                          Text(
+                            "Full Name",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          TextFormfieldData(
+                            hintText: "Enter your full name",
+                            controller: _nameController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your name';
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: 20),
+
+                          // Home City Field
+                          Text(
+                            "Home City",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          TextFormfieldData(
+                            hintText: "Enter your home city",
+                            controller: _homecityController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your home city';
+                              }
+                              return null;
+                            },
+                          ),
                           SizedBox(height: 40),
 
-                          // Sign In Button
+                          // Create Account Button
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  signIn();
+                                if (_emailController.text.isNotEmpty &&
+                                    _passwordController.text.isNotEmpty &&
+                                    _nameController.text.isNotEmpty &&
+                                    _homecityController.text.isNotEmpty) {
+                                  createAccount();
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      content: Text("Please enter all details"),
+                                      content: Text("Please fill all fields"),
                                       backgroundColor: Colors.red,
                                     ),
                                   );
@@ -160,7 +210,7 @@ class _SigninScreenState extends State<SigninScreen> {
                                 elevation: 5,
                               ),
                               child: Text(
-                                "Sign In",
+                                "Create Account",
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
@@ -169,23 +219,6 @@ class _SigninScreenState extends State<SigninScreen> {
                             ),
                           ),
                           SizedBox(height: 20),
-
-                          // Forgot Password Link (Optional)
-                          Center(
-                            child: TextButton(
-                              onPressed: () {
-                                // Add forgot password functionality here
-                              },
-                              child: Text(
-                                "Forgot Password?",
-                                style: TextStyle(
-                                  color: Color(0xFF4ECDC4),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                     ),
@@ -199,17 +232,20 @@ class _SigninScreenState extends State<SigninScreen> {
     );
   }
 
-  void signIn() async {
-    final email = _emailController.text.trim();
-    final password = _passwordController.text.trim();
-    final UserModel? userModel = await getDetails(email);
-    if (userModel != null && userModel.password == password) {
-      print("matched");
+  createAccount() {
+    final useremail = _emailController.text.trim();
+    final userpassword = _passwordController.text.trim();
+    final username = _nameController.text.trim();
+    final userhomecity = _homecityController.text.trim();
+    if (_formKey.currentState!.validate()) {
+      final user = UserModel(
+          email: useremail,
+          password: userpassword,
+          name: username,
+          homecity: userhomecity);
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => BottomNav()));
-    } else {
-      final _errorMessage = 'User name and password does not match';
-      successMessage(context: context, successMessage: _errorMessage);
+      addUserProfile(user);
     }
   }
 }

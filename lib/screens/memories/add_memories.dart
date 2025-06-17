@@ -23,8 +23,8 @@ class _AddMemoriesScreenState extends State<AddMemoriesScreen> {
   bool selecetedimg = false;
   DateTime? MemoryDate;
   List<String> imagePath = [];
-  XFile? selectedImage;
-  bool hasSelectedImage = false;
+  // XFile? selectedImage;
+  // bool hasSelectedImage = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,14 +45,6 @@ class _AddMemoriesScreenState extends State<AddMemoriesScreen> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      ...List.generate(
-                          imagePath.length,
-                          (index) => CircleAvatar(
-                                radius: 50,
-                                backgroundImage: imagePath.isNotEmpty
-                                    ? FileImage(File(imagePath[index]))
-                                    : const AssetImage("") as ImageProvider,
-                              )),
                       IconButton.filled(
                         onPressed: () {
                           addMemoryImage(context);

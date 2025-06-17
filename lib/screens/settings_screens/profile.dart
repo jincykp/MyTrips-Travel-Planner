@@ -172,25 +172,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     color: Color.fromARGB(255, 233, 231, 231), size: 45)))
       ],
     );
-    // return image == null
-    //     ? CircleAvatar(
-    //         backgroundColor: Color.fromARGB(255, 106, 106, 173),
-    //         radius: 70,
-    //         child: IconButton(
-    //           onPressed: () {
-    //             getimage();
-    //           },
-    //           icon: Icon(
-    //             Icons.person,
-    //             color: Colors.purple,
-    //             size: 80,
-    //           ),
-    //         ),
-    //       )
-    //     : CircleAvatar(
-    //         radius: 60,
-    //         backgroundImage: FileImage(File(image!)),
-    //       );
   }
 
   Widget buildUserDetails() {
