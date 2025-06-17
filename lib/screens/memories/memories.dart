@@ -79,19 +79,35 @@ class _MemoryScreenState extends State<MemoryScreen> {
   }
 
   Widget buildMemoryGrid(List<MemoryModel> memories) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 16,
-          crossAxisSpacing: 16,
-          childAspectRatio: 0.85,
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            // Calculate responsive grid
+            double screenWidth = constraints.maxWidth;
+            int crossAxisCount = screenWidth > 600 ? 3 : 2;
+            double spacing = 12.0;
+            double availableWidth =
+                screenWidth - (spacing * (crossAxisCount - 1));
+            double cardWidth = availableWidth / crossAxisCount;
+            double childAspectRatio =
+                cardWidth / (cardWidth * 1.1); // Slightly taller cards
+
+            return GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
+                mainAxisSpacing: spacing,
+                crossAxisSpacing: spacing,
+                childAspectRatio: childAspectRatio,
+              ),
+              itemCount: memories.length,
+              itemBuilder: (context, index) {
+                return buildMemoryCard(memories[index]);
+              },
+            );
+          },
         ),
-        itemCount: memories.length,
-        itemBuilder: (context, index) {
-          return buildMemoryCard(memories[index]);
-        },
       ),
     );
   }
@@ -130,84 +146,110 @@ class _MemoryScreenState extends State<MemoryScreen> {
             );
           },
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(12.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Memory folder icon with preview
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(15),
-                    border: Border.all(
-                      color: Colors.white.withOpacity(0.3),
-                      width: 1,
+                // Memory folder icon with preview - Flexible sizing
+                Flexible(
+                  flex: 3,
+                  child: Container(
+                    constraints: BoxConstraints(
+                      maxWidth: 70,
+                      maxHeight: 70,
+                      minWidth: 50,
+                      minHeight: 50,
                     ),
-                  ),
-                  child: Stack(
-                    children: [
-                      Center(
-                        child: Icon(
-                          Icons.photo_library,
-                          color: Colors.white,
-                          size: 40,
-                        ),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: Colors.white.withOpacity(0.3),
+                        width: 1,
                       ),
-                      if (memory.MemoryImage != null &&
-                          memory.MemoryImage!.isNotEmpty)
-                        Positioned(
-                          top: 8,
-                          right: 8,
-                          child: Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              color: Colors.amber,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Center(
-                              child: Text(
-                                '${memory.MemoryImage!.length}',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
+                    ),
+                    child: Stack(
+                      children: [
+                        Center(
+                          child: Icon(
+                            Icons.photo_library,
+                            color: Colors.white,
+                            size: 32,
+                          ),
+                        ),
+                        if (memory.MemoryImage != null &&
+                            memory.MemoryImage!.isNotEmpty)
+                          Positioned(
+                            top: 6,
+                            right: 6,
+                            child: Container(
+                              constraints: BoxConstraints(
+                                minWidth: 16,
+                                minHeight: 16,
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 4, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '${memory.MemoryImage!.length}',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 8,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(height: 12),
-                // Trip name
-                Text(
-                  memory.MemoryTripName ?? 'Unnamed Memory',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
                 ),
                 SizedBox(height: 8),
-                // Date
-                if (memory.MemoryDate != null)
-                  Text(
-                    memory.MemoryDate!,
+
+                // Trip name - Flexible
+                Flexible(
+                  flex: 2,
+                  child: Text(
+                    memory.MemoryTripName ?? 'Unnamed Memory',
                     style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 12,
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                SizedBox(height: 12),
-                // Action buttons
+                ),
+
+                // Date - Flexible
+                if (memory.MemoryDate != null)
+                  Flexible(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      child: Text(
+                        memory.MemoryDate!,
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 10,
+                        ),
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+
+                SizedBox(height: 8),
+
+                // Action buttons - Fixed size
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -217,6 +259,11 @@ class _MemoryScreenState extends State<MemoryScreen> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: IconButton(
+                        constraints: BoxConstraints(
+                          minWidth: 32,
+                          minHeight: 32,
+                        ),
+                        padding: EdgeInsets.all(4),
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -229,7 +276,7 @@ class _MemoryScreenState extends State<MemoryScreen> {
                         icon: Icon(
                           Icons.visibility,
                           color: Colors.white,
-                          size: 20,
+                          size: 16,
                         ),
                       ),
                     ),
@@ -239,13 +286,18 @@ class _MemoryScreenState extends State<MemoryScreen> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: IconButton(
+                        constraints: BoxConstraints(
+                          minWidth: 32,
+                          minHeight: 32,
+                        ),
+                        padding: EdgeInsets.all(4),
                         onPressed: () {
                           deleteAlertDialog(context, memory.id!);
                         },
                         icon: Icon(
                           Icons.delete,
                           color: Colors.red[300],
-                          size: 20,
+                          size: 16,
                         ),
                       ),
                     ),
@@ -283,14 +335,6 @@ class _MemoryScreenState extends State<MemoryScreen> {
               color: Color(0xFF1E3A8A),
               fontSize: 18,
               fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 12),
-          Text(
-            "Start capturing your travel memories!",
-            style: TextStyle(
-              color: Colors.grey[600],
-              fontSize: 16,
             ),
           ),
         ],
@@ -343,11 +387,14 @@ class _MemoryScreenState extends State<MemoryScreen> {
             children: [
               Icon(Icons.warning_amber_rounded, color: Colors.red),
               SizedBox(width: 12),
-              Text(
-                "Delete Memory",
-                style: TextStyle(
-                  color: Color(0xFF1E3A8A),
-                  fontWeight: FontWeight.bold,
+              Expanded(
+                child: Text(
+                  "Delete Memory",
+                  style: TextStyle(
+                    color: Color(0xFF1E3A8A),
+                    fontWeight: FontWeight.bold,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],

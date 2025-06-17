@@ -36,9 +36,9 @@ class _ScreenSplashState extends State<ScreenSplash> {
               Text(
                 "MY TRIPS",
                 style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 35,
-                ),
+                    color: Colors.white,
+                    fontSize: 35,
+                    fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 50),
               Center(

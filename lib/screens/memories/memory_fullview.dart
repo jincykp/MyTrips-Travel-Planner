@@ -87,18 +87,20 @@ class _MemoryFullviewState extends State<MemoryFullview> {
   }
 
   Widget buildBody() {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Images Section First
-            buildImagesSection(),
-            SizedBox(height: 24),
-            // Trip Details Section
-            buildTripDetailsSection(),
-          ],
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Images Section First
+              buildImagesSection(),
+              SizedBox(height: 24),
+              // Trip Details Section
+              buildTripDetailsSection(),
+            ],
+          ),
         ),
       ),
     );
@@ -108,6 +110,7 @@ class _MemoryFullviewState extends State<MemoryFullview> {
     if (memoryListss.MemoryImage == null || memoryListss.MemoryImage!.isEmpty) {
       return Container(
         height: 200,
+        width: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -148,6 +151,7 @@ class _MemoryFullviewState extends State<MemoryFullview> {
     }
 
     return Container(
+      width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -160,7 +164,7 @@ class _MemoryFullviewState extends State<MemoryFullview> {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(12.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -172,15 +176,17 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                   size: 24,
                 ),
                 SizedBox(width: 12),
-                Text(
-                  "Memory Photos",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1E3A8A),
+                Expanded(
+                  child: Text(
+                    "Memory Photos",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF1E3A8A),
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                Spacer(),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
@@ -199,20 +205,41 @@ class _MemoryFullviewState extends State<MemoryFullview> {
               ],
             ),
             SizedBox(height: 16),
-            Container(
-              height: 300,
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
-                  childAspectRatio: 1,
-                ),
-                itemCount: memoryListss.MemoryImage!.length,
-                itemBuilder: (context, index) {
-                  return buildImageCard(memoryListss.MemoryImage![index]);
-                },
-              ),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                // Calculate grid dimensions based on available width
+                double availableWidth = constraints.maxWidth;
+                int crossAxisCount = availableWidth > 400 ? 4 : 3;
+                double spacing = 8.0;
+                double itemWidth =
+                    (availableWidth - (spacing * (crossAxisCount - 1))) /
+                        crossAxisCount;
+                double gridHeight =
+                    ((memoryListss.MemoryImage!.length / crossAxisCount)
+                                .ceil() *
+                            itemWidth) +
+                        ((memoryListss.MemoryImage!.length / crossAxisCount)
+                                    .ceil() -
+                                1) *
+                            spacing;
+
+                return Container(
+                  height: gridHeight.clamp(100.0, 300.0),
+                  child: GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: crossAxisCount,
+                      mainAxisSpacing: spacing,
+                      crossAxisSpacing: spacing,
+                      childAspectRatio: 1,
+                    ),
+                    itemCount: memoryListss.MemoryImage!.length,
+                    itemBuilder: (context, index) {
+                      return buildImageCard(memoryListss.MemoryImage![index]);
+                    },
+                  ),
+                );
+              },
             ),
           ],
         ),
@@ -250,6 +277,15 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: double.infinity,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: Colors.grey[200],
+                    child: Icon(
+                      Icons.broken_image,
+                      color: Colors.grey[400],
+                    ),
+                  );
+                },
               ),
               // Overlay for better tap indication
               Container(
@@ -290,6 +326,7 @@ class _MemoryFullviewState extends State<MemoryFullview> {
 
   Widget buildTripDetailsSection() {
     return Container(
+      width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -302,7 +339,7 @@ class _MemoryFullviewState extends State<MemoryFullview> {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -315,12 +352,15 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                   size: 24,
                 ),
                 SizedBox(width: 12),
-                Text(
-                  "Trip Information",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1E3A8A),
+                Expanded(
+                  child: Text(
+                    "Trip Information",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF1E3A8A),
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
@@ -363,7 +403,8 @@ class _MemoryFullviewState extends State<MemoryFullview> {
     bool isExpanded = false,
   }) {
     return Container(
-      padding: EdgeInsets.all(16),
+      width: double.infinity,
+      padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Color(0xFF3B82F6).withOpacity(0.05),
         borderRadius: BorderRadius.circular(12),
@@ -383,12 +424,15 @@ class _MemoryFullviewState extends State<MemoryFullview> {
                 size: 20,
               ),
               SizedBox(width: 8),
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF3B82F6),
+              Expanded(
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF3B82F6),
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
@@ -402,7 +446,7 @@ class _MemoryFullviewState extends State<MemoryFullview> {
               fontWeight: FontWeight.w500,
               height: isExpanded ? 1.4 : 1.2,
             ),
-            maxLines: isExpanded ? null : 1,
+            maxLines: isExpanded ? null : 2,
             overflow: isExpanded ? null : TextOverflow.ellipsis,
           ),
         ],
